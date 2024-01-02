@@ -7,6 +7,10 @@
     <servlet>
         <servlet-name>richcardServlet</servlet-name>
         <servlet-class>servlet.richcardServlet</servlet-class>
+        <servlet>
+            <servlet-name>send_Tester_Invite</servlet-name>
+            <servlet-class>servlet.send_Tester_Invite</servlet-class>
+        </servlet>
     </servlet>
     <servlet>
         <servlet-name>Rich_card_carousels</servlet-name>
@@ -31,6 +35,14 @@
     <servlet>
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>ram_rcs.NewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>inserDB</servlet-name>
+        <servlet-class>inserDB</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChatPBck</servlet-name>
+        <servlet-class>ChatPBck</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>send_Tester_Invite</servlet-name>
@@ -88,9 +100,23 @@
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>inserDB</servlet-name>
+        <url-pattern>/inserDB</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatPBck</servlet-name>
+        <url-pattern>/ChatPBck</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <servlet-name>
+        <servlet-name>suggestionServlet</servlet-name>
+        <url-pattern>/suggestionServlet</url-pattern>
+    </servlet-name>
+    <servlet-name>suggestionServlet</servlet-name>
+    <url-pattern>/suggestionServlet</url-pattern>
 </web-app>

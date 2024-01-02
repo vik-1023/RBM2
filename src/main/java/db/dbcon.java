@@ -24,16 +24,16 @@ public class dbcon {
 
  String url = "jdbc:mysql://localhost:3306/";
     ResultSet rs = null;
-//   String userName = "reports";
-//   String password = "reports@#123";
- String userName = "root";
-String password = "root";
+   String userName = "reports";
+   String password = "reports@#123";
+// String userName = "root";
+//String password = "root";
 
     public void getCon(String dbname) {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url + dbname + "?autoReconnect=true&allowLoadLocalInfile=true&useSSL=false", userName, password);
+            conn = DriverManager.getConnection(url + dbname + "?autoReconnect=true&allowLoadLocalInfile=true&useSSL=false&allowPublicKeyRetrieval=true", userName, password);
         } catch (Exception ex) {
             System.out.println("--exceptionn  getCon-----" + ex);
             ex.printStackTrace();

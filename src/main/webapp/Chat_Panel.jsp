@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+   
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -24,7 +24,7 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/css/ChatCss.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/css_inder.css" rel="stylesheet" type="text/css"/>
  
   <!-- Template Main CSS File -->
   <link href="assets/css/style24.css" rel="stylesheet">

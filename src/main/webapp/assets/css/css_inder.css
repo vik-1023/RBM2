@@ -3,6 +3,29 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.chatBox{
+      /* Set the width of your chat container */
+   /* Set the height of your chat container */
+   /* Set the width of your chat container */
+   /* Set the height of your chat container */
+  overflow: auto; /* Add a scroll bar when content overflows */
+  border: 2px solid grey;
+  /* Optional: Add border for styling */
+}
+ 
+.list{
+    
+    height : 50px;
+  border: 2px ;
+      position: relative;
+    top: 30px;
+   
+}
+#FullDiv{
+      
+}
+
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;

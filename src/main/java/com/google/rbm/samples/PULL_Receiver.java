@@ -19,9 +19,6 @@ package com.google.rbm.samples;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.services.rcsbusinessmessaging.v1.RCSBusinessMessaging;
-import com.google.api.services.rcsbusinessmessaging.v1.model.AgentContentMessage;
-import com.google.api.services.rcsbusinessmessaging.v1.model.AgentMessage;
-import com.google.api.services.rcsbusinessmessaging.v1.model.ContentInfo;
 import com.google.api.services.rcsbusinessmessaging.v1.model.DialAction;
 import com.google.api.services.rcsbusinessmessaging.v1.model.OpenUrlAction;
 import com.google.api.services.rcsbusinessmessaging.v1.model.StandaloneCard;
@@ -46,10 +43,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -132,6 +127,10 @@ public class PULL_Receiver {
                 logger.info("Executing:" + sql);
                 logger.info("Rows Inserted:" + db.setUpdate(sql));
                 db.closeConection();
+                String received_text = jsonMap.getString("text");
+                rcvdTxt rcvd=new rcvdTxt();
+               rcvd.saveMessage(received_text);
+                
                 // make sure the map contains response text
                 if (jsonMap.has("text")) {
                     String userResponseText = jsonMap.getString("text");

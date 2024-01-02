@@ -14,9 +14,7 @@
 package com.google.rbm.samples.lib;
 
 // [START of the RBM API Helper]
-
 // [START import_libraries]
-
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -31,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.rbm.samples.lib.cards.CardOrientation;
 import com.google.rbm.samples.lib.cards.CardWidth;
 import com.google.rbm.samples.lib.cards.MediaHeight;
+import db.dbcon;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,6 +46,7 @@ import java.util.logging.Logger;
  * Helper class for using the RBM API.
  */
 public class RbmApiHelper {
+
     private static final Logger logger = Logger.getLogger(RbmApiHelper.class.getName());
 
     private static final String EXCEPTION_WAS_THROWN = "an exception was thrown";
@@ -70,7 +70,9 @@ public class RbmApiHelper {
 
     /**
      * Initializes credentials used by the RBM API.
-     * @param credentialsFileLocation The location for the GCP service account file.
+     *
+     * @param credentialsFileLocation The location for the GCP service account
+     * file.
      */
     private void initCredentials(String credentialsFileLocation) {
         logger.info("Initializing credentials for RBM.");
@@ -79,12 +81,12 @@ public class RbmApiHelper {
             ClassLoader classLoader = getClass().getClassLoader();
             File file = new File(classLoader.getResource(credentialsFileLocation).getFile());
 
-            this.credentials =
-                    GoogleCredentials.fromStream(new FileInputStream(file))
+            this.credentials
+                    = GoogleCredentials.fromStream(new FileInputStream(file))
                             .createScoped(
                                     Collections.singletonList("https://www.googleapis.com/auth/rcsbusinessmessaging"));
             this.credentials.refreshIfExpired();
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
         }
     }
@@ -98,20 +100,21 @@ public class RbmApiHelper {
             GsonFactory gsonFactory = GsonFactory.getDefaultInstance();
 
             // create instance of the RBM API
-            builder = new RCSBusinessMessaging
-                    .Builder(httpTransport, gsonFactory, null)
+            builder = new RCSBusinessMessaging.Builder(httpTransport, gsonFactory, null)
                     .setApplicationName(((ServiceAccountCredentials) credentials).getProjectId());
 
             // set the API credentials and endpoint
             builder.setHttpRequestInitializer(new HttpCredentialsAdapter(credentials));
             builder.setRootUrl(RBM_API_URL);
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
         }
     }
 
     /**
-     * Takes the msisdn and converts it into the format we need to make API calls.
+     * Takes the msisdn and converts it into the format we need to make API
+     * calls.
+     *
      * @param msisdn The phone number in E.164 format.
      * @return The phone number reformatted for the API.
      */
@@ -121,11 +124,12 @@ public class RbmApiHelper {
 
     /**
      * Registers the device as a tester for this agent.
+     *
      * @param msisdn The phone number in E.164 format.
      */
     public void registerTester(String msisdn) throws Exception {
         Tester tester = new Tester();
-      logger.info(tester.getInviteStatus());  
+        logger.info(tester.getInviteStatus());
 
         // convert the msisdn into the API format
         String clientDevice = convertToApiFormat(msisdn);
@@ -138,8 +142,9 @@ public class RbmApiHelper {
     }
 
     /**
-     * Checks whether the device associated with the phone number is RCS enabled.
-     * This uses the asynchronous capability check API.
+     * Checks whether the device associated with the phone number is RCS
+     * enabled. This uses the asynchronous capability check API.
+     *
      * @param msisdn The phone number in E.164 format.
      */
     public void performCapabilityCheck(String msisdn) throws Exception {
@@ -161,18 +166,19 @@ public class RbmApiHelper {
         // build the request
         RCSBusinessMessaging.Phones.Capability.RequestCapabilityCallback request
                 = builder
-                .build()
-                .phones()
-                .capability()
-                .requestCapabilityCallback(parent, capabilityCallbackRequest);
+                        .build()
+                        .phones()
+                        .capability()
+                        .requestCapabilityCallback(parent, capabilityCallbackRequest);
 
         // execute the capability request
         logger.info(request.execute().toString());
     }
 
     /**
-     * Checks whether the device associated with the phone number is RCS enabled.
-     * This uses the alpha synchronous capability check API.
+     * Checks whether the device associated with the phone number is RCS
+     * enabled. This uses the alpha synchronous capability check API.
+     *
      * @param msisdn The phone number in E.164 format.
      * @return True if the device is RCS enabled.
      */
@@ -185,9 +191,9 @@ public class RbmApiHelper {
         // build the request
         RCSBusinessMessaging.Phones.GetCapabilities capabilityCheck
                 = builder
-                .build()
-                .phones()
-                .getCapabilities(parent);
+                        .build()
+                        .phones()
+                        .getCapabilities(parent);
 
         capabilityCheck.setRequestId(UUID.randomUUID().toString());
 
@@ -196,15 +202,17 @@ public class RbmApiHelper {
             logger.info(capabilityCheck.execute().toString());
 
             return true;
-        } catch(GoogleJsonResponseException e) {
+        } catch (GoogleJsonResponseException e) {
             logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
 
-           return false;
+            return false;
         }
     }
 
     /**
-     * Uploads the file located at the publicly available URL to the RBM platform.
+     * Uploads the file located at the publicly available URL to the RBM
+     * platform.
+     *
      * @param fileUrl A publicly available URL.
      * @return A unique file resource id.
      */
@@ -213,7 +221,9 @@ public class RbmApiHelper {
     }
 
     /**
-     * Uploads the file located at the publicly available URL to the RBM platform.
+     * Uploads the file located at the publicly available URL to the RBM
+     * platform.
+     *
      * @param fileUrl A publicly available URL.
      * @param thumbnailFileUrl Includes the thumbnail if there is one.
      * @return A unique file resource id.
@@ -232,19 +242,20 @@ public class RbmApiHelper {
         }
 
         try {
-            RCSBusinessMessaging.Files.Create file =
-                    builder.build().files().create(fileRequest);
+            RCSBusinessMessaging.Files.Create file
+                    = builder.build().files().create(fileRequest);
 
             String jsonResponse = file.execute().toString();
 
             logger.info("jsonResponse:" + jsonResponse);
 
             Gson gson = new Gson();
-            Type type = new TypeToken<Map<String, String>>(){}.getType();
+            Type type = new TypeToken<Map<String, String>>() {
+            }.getType();
             Map<String, String> jsonMap = gson.fromJson(jsonResponse, type);
 
             resourceId = jsonMap.get("name");
-        } catch(IOException e) {
+        } catch (IOException e) {
             logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
         }
 
@@ -253,6 +264,7 @@ public class RbmApiHelper {
 
     /**
      * Creates a card content object based on the parameters.
+     *
      * @param title The title for the card.
      * @param description The description for the card.
      * @param imageUrl The image URL for the card's media.
@@ -261,14 +273,14 @@ public class RbmApiHelper {
      * @return The standalone card object.
      */
     public CardContent createCardContent(String title,
-                                         String description,
-                                         String imageUrl,
-                                         MediaHeight height,
-                                         List<Suggestion> suggestions) {
+            String description,
+            String imageUrl,
+            MediaHeight height,
+            List<Suggestion> suggestions) {
         CardContent cardContent = new CardContent();
 
         // have to build card from bottom up, starting with the media
-        if(imageUrl != null) {
+        if (imageUrl != null) {
             // create content info for media element with the image URL
             Media media = new Media();
             media.setContentInfo(new ContentInfo().setFileUrl(imageUrl));
@@ -279,17 +291,17 @@ public class RbmApiHelper {
         }
 
         // make sure we have a title
-        if(title != null) {
+        if (title != null) {
             cardContent.setTitle(title);
         }
 
         // make sure we have a description
-        if(description != null) {
+        if (description != null) {
             cardContent.setDescription(description);
         }
 
         // make sure there are suggestions
-        if(suggestions != null && suggestions.size() > 0) {
+        if (suggestions != null && suggestions.size() > 0) {
             cardContent.setSuggestions(suggestions);
         }
 
@@ -298,6 +310,7 @@ public class RbmApiHelper {
 
     /**
      * Creates a standalone card object based on the passed in parameters.
+     *
      * @param title The title for the card.
      * @param description The description for the card.
      * @param imageUrl The image URL for the card's media.
@@ -307,11 +320,11 @@ public class RbmApiHelper {
      * @return The standalone card object.
      */
     public StandaloneCard createStandaloneCard(String title,
-                                               String description,
-                                               String imageUrl,
-                                               MediaHeight height,
-                                               CardOrientation orientation,
-                                               List<Suggestion> suggestions) {
+            String description,
+            String imageUrl,
+            MediaHeight height,
+            CardOrientation orientation,
+            List<Suggestion> suggestions) {
         // create the card content representation of the parameters
         CardContent cardContent = createCardContent(
                 title,
@@ -332,6 +345,7 @@ public class RbmApiHelper {
     /**
      * Generic method to send a text message using the RBM api to the user with
      * the phone number msisdn.
+     *
      * @param messageText The text to send the user.
      * @param msisdn The phone number in E.164 format.
      */
@@ -342,6 +356,7 @@ public class RbmApiHelper {
     /**
      * Generic method to send a text message using the RBM api to the user with
      * the phone number msisdn.
+     *
      * @param messageText The text to send the user.
      * @param msisdn The phone number in E.164 format.
      * @param suggestions The chip list suggestions.
@@ -353,7 +368,7 @@ public class RbmApiHelper {
         agentContentMessage.setText(messageText);
 
         // attach suggestions if there are some
-        if(suggestions != null && suggestions.size() > 0) {
+        if (suggestions != null && suggestions.size() > 0) {
             agentContentMessage.setSuggestions(suggestions);
         }
 
@@ -366,6 +381,7 @@ public class RbmApiHelper {
 
     /**
      * Generic method to execute the sending a standalone card to a client.
+     *
      * @param standaloneCard The card object to send.
      * @param msisdn The phone number in E.164 format.
      * @throws IOException
@@ -388,8 +404,11 @@ public class RbmApiHelper {
     }
 
     /**
-     * Generic method to execute the sending of a carousel rich card to a client.
-     * @param cardContents List of CardContent items to be attached to the CarourselCard.
+     * Generic method to execute the sending of a carousel rich card to a
+     * client.
+     *
+     * @param cardContents List of CardContent items to be attached to the
+     * CarourselCard.
      * @param cardWidth Width of the cards for the carousel.
      * @param msisdn The phone number in E.164 format.
      * @throws IOException
@@ -418,7 +437,9 @@ public class RbmApiHelper {
     }
 
     /**
-     * Revokes the message associated with the messageId from being delivered to the device.
+     * Revokes the message associated with the messageId from being delivered to
+     * the device.
+     *
      * @param messageId The id for a message send to msisdn.
      * @param msisdn The phone number in E.164 format.
      * @throws IOException
@@ -427,8 +448,8 @@ public class RbmApiHelper {
         // set the phone number and message id for revoking
         String name = convertToApiFormat(msisdn) + "/agentMessages/" + messageId;
 
-        RCSBusinessMessaging.Phones.AgentMessages.Delete message =
-                builder.build().phones().agentMessages().delete(name);
+        RCSBusinessMessaging.Phones.AgentMessages.Delete message
+                = builder.build().phones().agentMessages().delete(name);
 
         logger.info("Revoking message to client " + msisdn);
 
@@ -438,25 +459,38 @@ public class RbmApiHelper {
 
     /**
      * Generic method to execute the sending of an agent message to a client.
+     *
      * @param agentMessage The message payload to send.
      * @param msisdn The phone number in E.164 format.
      */
     public void sendAgentMessage(AgentMessage agentMessage, String msisdn) throws IOException {
         // create a message request to send to the msisdn
-        RCSBusinessMessaging.Phones.AgentMessages.Create message =
-                builder.build().phones().agentMessages().create(convertToApiFormat(msisdn), agentMessage);
+        RCSBusinessMessaging.Phones.AgentMessages.Create message
+                = builder.build().phones().agentMessages().create(convertToApiFormat(msisdn), agentMessage);
 
         // generate a unique message id
-        message.setMessageId(UUID.randomUUID().toString());
-
-        logger.info("Sending message to client " + msisdn);
-
-        // execute the request, sending the text to the user's phone
-        logger.info(message.execute().toString());
+        
+        dbcon db=new dbcon();
+        db.getCon("RCS");
+        String msgid = UUID.randomUUID().toString();
+         logger.info("Sending message to client " + msisdn);
+          message.setMessageId(msgid);
+         String response = message.execute().toString();
+       String sql = "insert into PULLS(msgId,Data)values('" + msgid + "','"+response+"')";
+       // execute the request, sending the text to the user's phone
+                logger.info(response);
+                logger.info("executing:"+sql);
+        
+       
+        db.setUpdate(sql);
+        db.closeConection();
+        
+        
     }
 
     /**
      * Sends a READ request to a user's phone.
+     *
      * @param messageId The message id for the message that was read.
      * @param msisdn The phone number in E.164 format to send the event to.
      */
@@ -470,21 +504,22 @@ public class RbmApiHelper {
             agentEvent.setMessageId(messageId);
 
             // create an agent event request to send to the msisdn
-            RCSBusinessMessaging.Phones.AgentEvents.Create agentEventMessage =
-                    builder.build().phones().agentEvents().create(deviceNumber, agentEvent);
+            RCSBusinessMessaging.Phones.AgentEvents.Create agentEventMessage
+                    = builder.build().phones().agentEvents().create(deviceNumber, agentEvent);
 
             // set a unique event id
             agentEventMessage.setEventId(UUID.randomUUID().toString());
 
             // execute the request, sending the READ event to the user's phone
             agentEventMessage.execute();
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
         }
     }
 
     /**
      * Sends the IS_TYPING event to the user.
+     *
      * @param msisdn The phone number in E.164 format to send the event to.
      */
     public void sendIsTypingMessage(String msisdn) {
@@ -496,15 +531,15 @@ public class RbmApiHelper {
             agentEvent.setEventType(EventType.IS_TYPING.toString());
 
             // create an agent event request to send to the msisdn
-            RCSBusinessMessaging.Phones.AgentEvents.Create agentEventMessage =
-                    builder.build().phones().agentEvents().create(deviceNumber, agentEvent);
+            RCSBusinessMessaging.Phones.AgentEvents.Create agentEventMessage
+                    = builder.build().phones().agentEvents().create(deviceNumber, agentEvent);
 
             // set a unique event id
             agentEventMessage.setEventId(UUID.randomUUID().toString());
 
             // execute the request, sending the READ event to the user's phone
             agentEventMessage.execute();
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
         }
     }

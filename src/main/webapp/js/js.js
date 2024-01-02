@@ -183,6 +183,180 @@ function getCalendar(){
             xhr.send();
 }
 
+function Sugg_Rep(){
+
+
+    var Sugg_Rep_Mob = document.getElementById("Sugg_Rep_Mob").value;
+    var Sugg_Rep1 = document.getElementById("Sugg_Rep1").value;
+    var Sugg_Rep2 = document.getElementById("Sugg_Rep2").value;
+    var Suggestion_Message = document.getElementById("Suggestion_Message").value;
+    
+
+    if (Sugg_Rep_Mob === "") {
+        alert("please enter number");
+        return false;
+    }
+    
+  
+ 
+    document.getElementById("test7").innerHTML = "Please wait ....";
+    var url = "suggestionServlet?Sugg_Rep_Mob=" + Sugg_Rep_Mob+"&Sugg_Rep1="+Sugg_Rep1+"&Sugg_Rep2="+Sugg_Rep2+"&Suggestion_Message="+Suggestion_Message;
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    setTimeout(function () {
+        document.getElementById("test7").innerHTML = "Send";
+    }, 1000);
+    xhr.onload = function () {
+
+        document.getElementById("test7").innerHTML = this.responseText;
+
+    },
+            xhr.send();
+}
+
+function viewLocation(){
+
+
+    var location_Mob = document.getElementById("location_Mob").value;
+    var setLocation = document.getElementById("setLocation").value;
+    var viewMap = document.getElementById("viewMap").value;
+    var setMessage = document.getElementById("setMessage").value;
+    
+
+    if (location_Mob === "") {
+        alert("please enter number");
+        return false;
+    }
+    
+  
+ 
+    document.getElementById("test9").innerHTML = "Please wait ....";
+    var url = "suggestionServlet?location_Mob=" + location_Mob+"&setLocation="+setLocation+"&viewMap="+viewMap+"&setMessage="+setMessage;
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    setTimeout(function () {
+        document.getElementById("test9").innerHTML = "Send";
+    }, 1000);
+    xhr.onload = function () {
+
+        document.getElementById("test9").innerHTML = this.responseText;
+
+    },
+            xhr.send();
+}
+
+
+function dialNumber(){
+
+
+    var set_number = document.getElementById("set_number").value;
+    var dial_number = document.getElementById("dial_number").value;
+    var setText = document.getElementById("setText").value;
+    var setMessage = document.getElementById("setMessage").value;
+    
+
+    if (set_number === "") {
+        alert("please enter number");
+        return false;
+    }
+    if (dial_number === "") {
+        alert("please enter number");
+        return false;
+    }
+    
+  
+ 
+    document.getElementById("test8").innerHTML = "Please wait ....";
+    var url = "dialNumberServlet?set_number=" + set_number+"&dial_number="+dial_number+"&setText="+setText+"&setMessage="+setMessage;
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    setTimeout(function () {
+        document.getElementById("test8").innerHTML = "Send";
+    }, 1000);
+    xhr.onload = function () {
+
+        document.getElementById("test8").innerHTML = this.responseText;
+
+    },
+            xhr.send();
+}
+
+
+function shareLocation(){
+
+
+    var share_Location_number = document.getElementById("share_Location_number").value;
+    var share_Location = document.getElementById("share_Location").value;
+    var setText_Location = document.getElementById("setText_Location").value;
+    
+    
+
+    if (share_Location_number === "") {
+        alert("please enter number");
+        return false;
+    }
+    if (share_Location === "") {
+        alert("please enter number");
+        return false;
+    }
+    
+  
+ 
+    document.getElementById("test10").innerHTML = "Please wait ....";
+    var url = "shareLocation?share_Location_number=" + share_Location_number+"&share_Location="+share_Location+"&setText_Location="+setText_Location;
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    setTimeout(function () {
+        document.getElementById("test10").innerHTML = "Send";
+    }, 1000);
+    xhr.onload = function () {
+
+        document.getElementById("test10").innerHTML = this.responseText;
+
+    },
+            xhr.send();
+}
+
+function openUrl(){
+
+
+    var set_number_url = document.getElementById("set_number_url").value;
+    var setUrl = document.getElementById("setUrl").value;
+    var setText1 = document.getElementById("setText1").value;
+    var sendTextMessage = document.getElementById("sendTextMessage").value;
+     alert(set_number_url);
+     alert(setText1);
+     alert(setUrl);
+     alert(sendTextMessage);
+     
+    
+
+    if (set_number_url === "") {
+        alert("please enter number");
+        return false;
+    }
+    if (setUrl === "") {
+        alert("please enter url");
+        return false;
+    }
+    
+  
+ 
+    document.getElementById("test11").innerHTML = "Please wait ....";
+    var url = "openUrlServlet?set_number_url=" + set_number_url+"&setUrl="+setUrl+"&setText1="+setText1+"&sendTextMessage="+sendTextMessage;
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    setTimeout(function () {
+        document.getElementById("test11").innerHTML = "Send";
+    }, 1000);
+    xhr.onload = function () {
+
+        document.getElementById("test11").innerHTML = this.responseText;
+
+    },
+            xhr.send();
+}
+
 
 
 
