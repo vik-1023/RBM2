@@ -74,7 +74,7 @@
                 <div class="row justify-content-left">
 
                     <div class="col-md-4 col-sm-4 col-xs-12">
-                        <button type="button" class="btn btn-secondary" onclick="openJspPage()">Create New RCS Bot</button><br>
+                       <button type="button" id="RCS_BTN" class="btn btn-secondary" onclick="openJspPage()" style="display:none;">Create New RCS Bot</button><br>
                         <!-- Search form -->
                         <label class="s_bot" for="search">Search Bots</label>
                         <div class="active-purple-3 active-purple-4 mb-4">

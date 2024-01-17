@@ -173,9 +173,9 @@
                                 <h5>API SERVER</h5>
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
                                 <label class="form-check-label" for="exampleRadios1">
-                                    <p>api.virtuosorbm.com</p>
+                                    <p>http://api.virtuosorbm.com</p>
                                 </label>
-                                <p class="text-red">SELECTED:api.virtuosorbm.com</p>
+                                <p class="text-red">SELECTED:http://api.virtuosorbm.com</p>
                             </div>
 
 
