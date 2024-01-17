@@ -23,6 +23,7 @@ public class dbcon {
     // "jdbc:mysql://localhost:3306/";
 
  String url = "jdbc:mysql://localhost:3306/";
+ //String url = "jdbc:mysql://192.168.20.66:3306/";
     ResultSet rs = null;
    String userName = "reports";
    String password = "reports@#123";
