@@ -38,36 +38,36 @@
     <body>
 
         <!-- ======= Header ======= -->
-<!--        <header id="header" class="fixed-top">
-            <div class="container d-flex align-items-center justify-content-between">
-                <h1 class="logo"><a href="index.html"><img src="assets/img/logo.png"></a></h1>
-                 Uncomment below if you prefer to use an image logo 
-                 <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
-
-                <nav id="navbar" class="navbar">
-                    <ul>
-                        <li><a class="nav-link scrollto active" href="#hero">MY BOTS</a></li>
-                        <li><a class="nav-link scrollto" href="#about">MY BRANDS</a></li>
-                        <li><a class="nav-link scrollto" href="#services">MY CAMPAIGNS</a></li>
-                        <li><a class="nav-link scrollto o" href="#portfolio">API</a></li>
-                        <li><a class="nav-link scrollto" href="#team">MY BILLING</a></li>
-                    </ul>
-                    <i class="bi bi-list mobile-nav-toggle"></i>
-
-                </nav> .navbar 
-                <div class="dropdown">
-                    <button class="btn btn-secondary1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="assets/img/profile_img.png">
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header> End Header -->
-  <%@include file="header.jsp" %>
+        <!--        <header id="header" class="fixed-top">
+                    <div class="container d-flex align-items-center justify-content-between">
+                        <h1 class="logo"><a href="index.html"><img src="assets/img/logo.png"></a></h1>
+                         Uncomment below if you prefer to use an image logo 
+                         <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
+        
+                        <nav id="navbar" class="navbar">
+                            <ul>
+                                <li><a class="nav-link scrollto active" href="#hero">MY BOTS</a></li>
+                                <li><a class="nav-link scrollto" href="#about">MY BRANDS</a></li>
+                                <li><a class="nav-link scrollto" href="#services">MY CAMPAIGNS</a></li>
+                                <li><a class="nav-link scrollto o" href="#portfolio">API</a></li>
+                                <li><a class="nav-link scrollto" href="#team">MY BILLING</a></li>
+                            </ul>
+                            <i class="bi bi-list mobile-nav-toggle"></i>
+        
+                        </nav> .navbar 
+                        <div class="dropdown">
+                            <button class="btn btn-secondary1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/img/profile_img.png">
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </header> End Header -->
+        <%@include file="header.jsp" %>
         <!-- ======= Hero Section ======= -->
         <section id="hero1" class="d-flex align-items-center">
             <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -102,28 +102,27 @@
                                         <td><b>Status</b></td>
                                         <td><b>Action</b></td>
                                     </tr>
-                                    <%
-                                        try {
+                                    <%                                        try {
                                             dbcon db = new dbcon();
                                             db.getCon("VNS_RCS");
 
-                                            String Query = "Select bot_name,bot_message_types,brand_name from rbm_table order by id DESC LIMIT 5";
+                                            String Query = "Select bot_name,bot_message_types,brand_name from rbm_table order by id DESC LIMIT 4";
                                             //select * from rbm_table order by id DESC LIMIT 5;
                                             //Select bot_name,bot_message_types,brand_name from rbm_tableorder by id DESC LIMIT 5
                                             Statement st = db.getStmt();
                                             ResultSet rs = st.executeQuery(Query);
-
                                             while (rs.next()) {
                                     %>
                                     <tr class="bot-row">
                                         <td style="padding:10px;"><%=rs.getString("bot_name")%></td>
                                         <td style="padding:10px;"><%=rs.getString("bot_message_types")%></td>
                                         <td style="padding:10px;"><%=rs.getString("brand_name")%></td>
-                                        <td style="padding:10px;">Done</td>
-                                        <td style="padding:10px;"><a href="#">View Details</a></td>
+                                        <td style="padding:10px;">Bot Created</td>
+                                        <td style="padding:10px;"><a href="#" onclick="view()">View Details</a></td>
                                     </tr>
                                     <%
                                             }
+                                            db.closeConection();
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -183,8 +182,8 @@
                                 // Replace 'your-page.jsp' with the actual path to your JSP page
                                 window.location.href = 'rcsmybot.jsp';
                             }
-                            
-                            
+
+
                             document.addEventListener('DOMContentLoaded', function () {
                                 const searchInput = document.getElementById('searchInput');
 
@@ -211,6 +210,9 @@
                                 });
                             });
 
+function view(){
+    alert("Developemrnt in Progress!!!");
+}
 
     </script>
 

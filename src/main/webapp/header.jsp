@@ -18,11 +18,12 @@
                 <h1 class="logo"><img src="assets1/img/logo.png"></a></h1>
                 <nav id="navbar" class="navbar">
                     <ul>
-                        <li><a class="nav-link scrollto" id="createnew-link" href="#hero" >MY BOTS</a></li>
-                        <li><a class="nav-link scrollto" id="chatbot-link" href="#hero" >MY CHATS</a></li>
+                        <li><a class="nav-link scrollto" id="createnew-link" href="dashboard.jsp" >MY BOTS</a></li>
+<!--                        <li><a class="nav-link scrollto" id="chatbot-link" href="#hero" >MY CHATS</a></li>-->
                         <li><a class="nav-link scrollto" id="brandsheader" href="#about">MY BRANDS</a></li>
-                        <li><a class="nav-link scrollto" href="#services">MY CAMPAIGNS</a></li>
-                        <li><a class="nav-link scrollto o" href="#portfolio">API</a></li>
+                        <li><a class="nav-link scrollto" href="RichcardCa.jsp">TEMPLATE</a></li>
+                          <li><a class="nav-link scrollto" href="MYCAMP.jsp">MY CAMPAIGNS</a></li>
+                        <li><a class="nav-link scrollto o" href="Api.jsp">API</a></li>
                         <li><a class="nav-link scrollto" id="billingnew" href="#team">MY BILLING</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>

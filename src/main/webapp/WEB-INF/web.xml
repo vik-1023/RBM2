@@ -1,122 +1,220 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+    <!-- servlet declarations -->
     <servlet>
         <servlet-name>send_Tester_Invite</servlet-name>
         <servlet-class>servlet.send_Tester_Invite</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>richcardServlet</servlet-name>
         <servlet-class>servlet.richcardServlet</servlet-class>
-        <servlet>
-            <servlet-name>send_Tester_Invite</servlet-name>
-            <servlet-class>servlet.send_Tester_Invite</servlet-class>
-        </servlet>
     </servlet>
+
     <servlet>
         <servlet-name>Rich_card_carousels</servlet-name>
         <servlet-class>servlet.Rich_card_carousels</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>textServlet</servlet-name>
         <servlet-class>servlet.textServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>detFetch</servlet-name>
+        <servlet-class>detFetch</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>data_json</servlet-name>
+        <servlet-class>data_json</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>campDrop</servlet-name>
+        <servlet-class>campDrop</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BrandDrop</servlet-name>
+        <servlet-class>BrandDrop</servlet-class>
+    </servlet>
+
     <servlet>
         <servlet-name>TestDevice</servlet-name>
         <servlet-class>servlet.TestDevice</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>FormSubmissionServlet1</servlet-name>
         <servlet-class>ram_rcs.FormSubmissionServlet1</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>Create_calendar_event</servlet-name>
         <servlet-class>servlet.Create_calendar_event</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>ram_rcs.NewServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>inserDB</servlet-name>
         <servlet-class>inserDB</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>ChatPBck</servlet-name>
         <servlet-class>ChatPBck</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>send_Tester_Invite</servlet-name>
-        <url-pattern>/send_Tester_Invite</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>richcardServlet</servlet-name>
-        <url-pattern>/richcardServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Rich_card_carousels</servlet-name>
-        <url-pattern>/Rich_card_carousels</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>textServlet</servlet-name>
-        <url-pattern>/textServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TestDevice</servlet-name>
-        <url-pattern>/TestDevice</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FormSubmissionServlet1</servlet-name>
-        <url-pattern>/FormSubmissionServlet1</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Create_calendar_event</servlet-name>
-        <url-pattern>/Create_calendar_event</url-pattern>
-    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TokenServlet</servlet-name>
+        <servlet-class>TokenServlet.TokenServlet</servlet-class>
+    </servlet>
+
     <servlet>
         <servlet-name>LoginD1</servlet-name>
         <servlet-class>LoginD1</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>SighupD1</servlet-name>
         <servlet-class>SighupD1</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>SendMailServlet</servlet-name>
         <servlet-class>SendMailServlet</servlet-class>
     </servlet>
+   
+    
+    <servlet>
+          <servlet-name>suggestionServlet</servlet-name>
+        <servlet-class>/suggestionServlet</servlet-class>
+    </servlet>
+
+    <!-- servlet mappings -->
+    <servlet-mapping>
+        <servlet-name>send_Tester_Invite</servlet-name>
+        <url-pattern>/send_Tester_Invite</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>richcardServlet</servlet-name>
+        <url-pattern>/richcardServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Rich_card_carousels</servlet-name>
+        <url-pattern>/Rich_card_carousels</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>textServlet</servlet-name>
+        <url-pattern>/textServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>detFetch</servlet-name>
+        <url-pattern>/detFetch</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>data_json</servlet-name>
+        <url-pattern>/data_json</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>campDrop</servlet-name>
+        <url-pattern>/campDrop</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BrandDrop</servlet-name>
+        <url-pattern>/BrandDrop</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TestDevice</servlet-name>
+        <url-pattern>/TestDevice</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>FormSubmissionServlet1</servlet-name>
+        <url-pattern>/FormSubmissionServlet1</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Create_calendar_event</servlet-name>
+        <url-pattern>/Create_calendar_event</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>LoginD1</servlet-name>
         <url-pattern>/LoginD1</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>SighupD1</servlet-name>
         <url-pattern>/SighupD1</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>SendMailServlet</servlet-name>
         <url-pattern>/SendMailServlet</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>inserDB</servlet-name>
         <url-pattern>/inserDB</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>ChatPBck</servlet-name>
         <url-pattern>/ChatPBck</url-pattern>
     </servlet-mapping>
-    <session-config>
+
+    <servlet-mapping>
+        <servlet-name>TokenServlet</servlet-name>
+        <url-pattern>/TokenServlet</url-pattern>
+         </servlet-mapping>
+            <servlet-mapping>
+        <servlet-name>suggestionServlet</servlet-name>
+        <url-pattern>/suggestionServlet</url-pattern>
+    </servlet-mapping>
+    
+      <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <servlet-name>
-        <servlet-name>suggestionServlet</servlet-name>
-        <url-pattern>/suggestionServlet</url-pattern>
-    </servlet-name>
-    <servlet-name>suggestionServlet</servlet-name>
-    <url-pattern>/suggestionServlet</url-pattern>
+    
+     <welcome-file-list>  
+   <welcome-file>dashboard</welcome-file>  
+  </welcome-file-list>
+  
+  
+  <!-- jsp declarations -->
+  
+  <servlet>
+    <servlet-name>dashboard</servlet-name>
+    <jsp-file>/CreateNewRcs.jsp</jsp-file>
+</servlet>
+<!--mapping-->
+<servlet-mapping>
+    <servlet-name>dashboard</servlet-name>
+    <url-pattern>/dashboard/*</url-pattern>   
+</servlet-mapping>
 </web-app>
+
+   

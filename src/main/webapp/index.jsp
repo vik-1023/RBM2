@@ -3,7 +3,7 @@
     Created on : 7 Dec, 2023, 8:09:58 PM
     Author     : Admin
 --%>
-<%--<%@include file="session.jsp" %>--%>
+<%@include file="session.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>RCS</title>
         <%@include file="common_jcb/jcb.jsp"%>
-         <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/img/favicon.png" rel="icon">
         <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
         <!-- Google Fonts -->
@@ -31,7 +31,7 @@
 
         <style>
             .c-f{
-               
+
                 text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
                 margin-top: 70px;
             }
@@ -39,7 +39,7 @@
 
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 text-align: center;
-                 color: white;
+                color: white;
             }
 
 
@@ -47,9 +47,9 @@
     </head>
     <body>
         <div style="">
-             <%@include file="header.jsp" %>
+            <%@include file="header.jsp" %>
         </div>
-       
+
         <div class="container-fluid c-f">
             <div class="row">
                 <div class="col col-3 mt-3">
@@ -233,12 +233,15 @@
                         </div>
                         <div class="card-body">
                             <form class="form-group">
-                                <input type="text" class="form-control mt-2" id="mobile_richcard" name="mobile_richcard" placeholder="Enter Mobile">
-                                <input type="text" class="form-control mt-2" id="url_richcard" name="url_richcard" placeholder="Enter Url_richcard">
-                                <input type="text" class="form-control mt-2" id="suggestion1_richcard" name="suggestion1_richcard" placeholder="Enter Suggestion1">
-                                <input type="text" class="form-control mt-2" id="suggestion2_richcard" name="suggestion2_richcard" placeholder="Enter Suggestion2">
-                                <input type="text" class="form-control mt-2" id="title_richcard" name="title_richcard" placeholder="Enter Title">
-                                <textarea type="text" class="form-control mt-2" id="description_richcard" name="description_richcard" placeholder="Enter description"></textarea>
+                                <input type="text" class="form-control mt-2" id="num" name="num" placeholder="Enter Mobile">
+                                <textarea type="text" class="form-control mt-2" id="desc" name="desc" placeholder="Enter description"></textarea>
+                                <input type="text" class="form-control mt-2" id="url" name="url" placeholder="Enter Card_Url">
+                                <input type="text" class="form-control mt-2" id="title" name="title" placeholder="Enter Title">
+                                <input type="text" class="form-control mt-2" id="action" name="action" placeholder="Enter Action.1 ">
+                                <input type="text" class="form-control mt-2" id="action_url" name="action_url" placeholder="Enter Action.1 Url">
+                                <input type="text" class="form-control mt-2" id="contact" name="contact" placeholder="Enter Action.2">
+                                <input type="text" class="form-control mt-2" id="contact_us_num" name="contact_us_num" placeholder="Enter Action.2 Mobile">
+                                <input type="text" class="form-control mt-2" id="action3" name="action3" placeholder="Enter Action.3 Text">
                                 <div class="mt-3 text-center">
                                     <button type="button" class="btn btn-outline-primary" onclick="getRichCard()">Submit</button>
                                 </div>
@@ -291,5 +294,71 @@
                     </div>
                 </div>
             </div>
+
+
+
+
+            <script>
+
+
+
+                function getRichCard() {
+
+                    var num = document.getElementById("num").value;
+                    var desc = document.getElementById("desc").value;
+                    var url = document.getElementById("url").value;
+                    var title = document.getElementById("title").value;
+                    var action = document.getElementById("action").value;
+                    var action_url = document.getElementById("action_url").value;
+                    var contact = document.getElementById("contact").value;
+                    var contact_us_num = document.getElementById("contact_us_num").value;
+                    var action3 = document.getElementById("action3").value;
+
+                    document.getElementById("test5").innerHTML = "Please wait ....";
+                    var url = "richcardServlet?num=" + num + "&desc=" + desc + "&url=" + url + "&title=" + title + "&action=" + action + "&action_url=" + action_url + "&contact=" + contact + "&contact_us_num=" + contact_us_num + "&action3=" + action3;
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("get", url, true);
+                    setTimeout(function () {
+                        document.getElementById("test5").innerHTML = "Send";
+                    }, 1000);
+                    xhr.onload = function () {
+
+                        document.getElementById("test5").innerHTML = this.responseText;
+
+                    },
+                            xhr.send();
+
+
+
+
+                }
+
+
+                function getData() {
+
+
+                    var mobile = document.getElementById("mobile").value;
+                    if (mobile === "") {
+                        alert("please enter number");
+                        return false;
+                    }
+
+                    document.getElementById("test").innerHTML = "Please wait ....";
+                    var url = "send_Tester_Invite?mobile=" + mobile;
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("get", url, true);
+                
+                    xhr.onload = function () {
+
+                        document.getElementById("test").innerHTML = this.responseText;
+
+                    },
+                            xhr.send();
+                }
+
+
+            </script>
+
+
     </body>
 </html>

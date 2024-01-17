@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import RMB.rbmClasses;
 import com.google.rbm.samples.FirstAgent;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,27 +33,24 @@ public class richcardServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            String mobile_richcard = request.getParameter("mobile_richcard");
-            String url_richcard = request.getParameter("url_richcard");
-            String suggestion1_richcard = request.getParameter("suggestion1_richcard");
-            String suggestion2_richcard = request.getParameter("suggestion2_richcard");
-           String title_richcard = request.getParameter("title_richcard");
-           String description_richcard = request.getParameter("description_richcard");
-           
-        
-           
-
-            if (mobile_richcard == null) {
-                out.println("not null");
-            } else {
-                FirstAgent fa = new FirstAgent("+91"+mobile_richcard);
-              fa.richCard(url_richcard,  suggestion1_richcard, suggestion2_richcard, title_richcard, description_richcard);
-                        
-            }
-
-        }catch(Exception e){
-            e.printStackTrace();
+            String num = request.getParameter("num");
+            String desc = request.getParameter("desc");
+            String url = request.getParameter("url");
+            String title = request.getParameter("title");
+            String action1 = request.getParameter("action");
+            String action_url1 = request.getParameter("action_url");
+            String contact_us = request.getParameter("contact");
+            String contact_us_num = request.getParameter("contact_us_num");
+            String chat = request.getParameter("action3");
             
+            rbmClasses rbm=new rbmClasses();
+            rbm.richCard(num, url, action_url1, title, desc, action1, contact_us, contact_us_num, chat);
+            
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
     }
 

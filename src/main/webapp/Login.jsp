@@ -75,7 +75,7 @@
 	 <div class="col-sm-6 col-md-6 col-xs-12">
 	     <div class="left-logo">
 		    <img src="assets/img/logo.png">
-			<p class="Rcs">Login and access VNS/BSNL APIs to send and receive RCS messages to/from India RCS Users.</p>
+			<p class="Rcs">Login and access VNS APIs to send and receive RCS messages to/from India RCS Users.</p>
 		 </div>
 	 
 	 </div>

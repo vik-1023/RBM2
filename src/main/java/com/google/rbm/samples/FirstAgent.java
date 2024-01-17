@@ -17,6 +17,7 @@ package com.google.rbm.samples;
 
 // [START import_libraries]
 import com.google.api.services.rcsbusinessmessaging.v1.RCSBusinessMessaging;
+import com.google.api.services.rcsbusinessmessaging.v1.model.BatchGetUsersResponse;
 import com.google.api.services.rcsbusinessmessaging.v1.model.CreateCalendarEventAction;
 import com.google.api.services.rcsbusinessmessaging.v1.model.DialAction;
 import com.google.api.services.rcsbusinessmessaging.v1.model.OpenUrlAction;
@@ -38,6 +39,7 @@ import com.google.api.services.rcsbusinessmessaging.v1.model.Suggestion;
 import com.google.api.services.rcsbusinessmessaging.v1.model.ViewLocationAction;
 import com.google.rbm.samples.lib.RbmApiHelper;
 import static java.lang.System.out;
+import java.util.Arrays;
 // [END import_libraries]
 
 /**
@@ -150,11 +152,9 @@ public class FirstAgent {
             suggestions.add(
                     new SuggestionHelper(s2, "suggestion_2").getSuggestedReply());
 
-          
-
             // Create a standalone rich card to send to the user
             StandaloneCard standaloneCard = rbmApiHelper.createStandaloneCard(
-                   title,
+                    title,
                     description,
                     fileUrl,
                     MediaHeight.MEDIUM,
@@ -239,250 +239,253 @@ public class FirstAgent {
                     text,
                     msisdn
             );
-            
-            System.out.println("rcs msg "+rbmApiHelper);
+
+            System.out.println("rcs msg " + rbmApiHelper);
         } catch (Exception e) {
             e.printStackTrace();
         }
-return 1;
+        return 1;
     }
-    
-    
-  public void createCalendarEvent(String title,String description,String startTime,String endTime,String text,String MessageText) {
-   try {
-   // Create an instance of the RBM API helper
-   RbmApiHelper rbmApiHelper = new RbmApiHelper();
 
-   // Create suggestions for chip list
-   List<Suggestion> suggestions = new ArrayList<Suggestion>();
-
-   // creating a create calendar event suggested action
-  CreateCalendarEventAction createCalendarEventAction = new CreateCalendarEventAction();
-   createCalendarEventAction.setTitle(title);
-   createCalendarEventAction.setDescription(description);
-   createCalendarEventAction.setStartTime(startTime);
-   createCalendarEventAction.setEndTime(endTime);
-
-   // creating a suggested action based on a create calendar event action
-   SuggestedAction suggestedAction = new SuggestedAction();
-   suggestedAction.setText(text);
-   suggestedAction.setPostbackData("postback_data_1234");
-   suggestedAction.setCreateCalendarEventAction(createCalendarEventAction);
-
-   // attaching action to a suggestion
-   Suggestion suggestion = new Suggestion();
-   suggestion.setAction(suggestedAction);
-
-   suggestions.add(suggestion);
-
-   // Send simple text message with the suggestion action
-   rbmApiHelper.sendTextMessage(
-      MessageText,
-      msisdn,
-      suggestions
-   );
-} catch(Exception e) {
-   e.printStackTrace();
-}
-
-   
-  
-}
-  
-  public void suggestionReply(String Sugg_Rep1,String Sugg_Rep2,String Suggestion_Message){
-      
-      
-      try {
-   // Create an instance of the RBM API helper
-   RbmApiHelper rbmApiHelper = new RbmApiHelper();
-
-   // Create suggestions for chip list
-   List<Suggestion> suggestions = new ArrayList<Suggestion>();
-   suggestions.add(
-      new SuggestionHelper(Sugg_Rep1, "suggestion_1").getSuggestedReply());
-
-   suggestions.add(
-      new SuggestionHelper(Sugg_Rep2, "suggestion_2").getSuggestedReply());
-
-   // Send simple text message to user
-   rbmApiHelper.sendTextMessage(
-      Suggestion_Message,
-      msisdn,
-      suggestions
-   );
-} catch(Exception e) {
-   e.printStackTrace();
-}
-      
-  }
-  
-    public void dialNumber(String setPhone,String setText,String setTextMessage){
-      
-      try {
-   // Create an instance of the RBM API helper
-   RbmApiHelper rbmApiHelper = new RbmApiHelper();
-
-   // Create suggestions for chip list
-   List<Suggestion> suggestions = new ArrayList<Suggestion>();
-
-   // creating a dial suggested action
-   DialAction dialAction = new DialAction();
-   dialAction.setPhoneNumber(setPhone);
-
-   // creating a suggested action based on a dial action
-   SuggestedAction suggestedAction = new SuggestedAction();
-   suggestedAction.setText(setText);
-   suggestedAction.setPostbackData("postback_data_1234");
-   suggestedAction.setDialAction(dialAction);
-
-   // attaching action to a suggestion
-   Suggestion suggestion = new Suggestion();
-   suggestion.setAction(suggestedAction);
-
-   suggestions.add(suggestion);
-
-   // Send simple text message with the suggestion action
-   rbmApiHelper.sendTextMessage(
-      setTextMessage,
-      msisdn,
-      suggestions
-   );
-} catch(Exception e) {
-   e.printStackTrace();
-}
-      
-  }
-    
-    
-    public void viewLocation(String setLocation,String viewMap,String setMessage){
-        
+    public void createCalendarEvent(String title, String description, String startTime, String endTime, String text, String MessageText) {
         try {
-   // Create an instance of the RBM API helper
-   RbmApiHelper rbmApiHelper = new RbmApiHelper();
+            // Create an instance of the RBM API helper
+            RbmApiHelper rbmApiHelper = new RbmApiHelper();
 
-   // Create suggestions for chip list
-   List<Suggestion> suggestions = new ArrayList<Suggestion>();
+            // Create suggestions for chip list
+            List<Suggestion> suggestions = new ArrayList<Suggestion>();
 
-   // creating a view location suggested action
-   ViewLocationAction viewLocationAction = new ViewLocationAction();
-   viewLocationAction.setQuery(setLocation);
+            // creating a create calendar event suggested action
+            CreateCalendarEventAction createCalendarEventAction = new CreateCalendarEventAction();
+            createCalendarEventAction.setTitle(title);
+            createCalendarEventAction.setDescription(description);
+            createCalendarEventAction.setStartTime(startTime);
+            createCalendarEventAction.setEndTime(endTime);
 
-   // creating a suggested action based on a view location action
-   SuggestedAction suggestedAction = new SuggestedAction();
-   suggestedAction.setText(viewMap);
-   suggestedAction.setPostbackData("postback_data_1234");
-   suggestedAction.setViewLocationAction(viewLocationAction);
+            // creating a suggested action based on a create calendar event action
+            SuggestedAction suggestedAction = new SuggestedAction();
+            suggestedAction.setText(text);
+            suggestedAction.setPostbackData("postback_data_1234");
+            suggestedAction.setCreateCalendarEventAction(createCalendarEventAction);
 
-   // attaching action to a suggestion
-   Suggestion suggestion = new Suggestion();
-   suggestion.setAction(suggestedAction);
+            // attaching action to a suggestion
+            Suggestion suggestion = new Suggestion();
+            suggestion.setAction(suggestedAction);
 
-   suggestions.add(suggestion);
+            suggestions.add(suggestion);
 
-   // Send simple text message with the suggestion action
-   rbmApiHelper.sendTextMessage(
-      setMessage,
-      msisdn,
-      suggestions
-   );
-} catch(Exception e) {
-   e.printStackTrace();
-}
-        
-        
-        
+            // Send simple text message with the suggestion action
+            rbmApiHelper.sendTextMessage(
+                    MessageText,
+                    msisdn,
+                    suggestions
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
-    
-    public void shareLocation(String share_Location,String setText_Location){
-        
-        
-       try {
-   // Create an instance of the RBM API helper
-   RbmApiHelper rbmApiHelper = new RbmApiHelper();
 
-   // Create suggestions for chip list
-   List<Suggestion> suggestions = new ArrayList<Suggestion>();
+    public void suggestionReply(String Sugg_Rep1, String Sugg_Rep2, String Suggestion_Message) {
 
-   // creating a share location suggested action
-   ShareLocationAction shareLocationAction = new ShareLocationAction();
+        try {
+            // Create an instance of the RBM API helper
+            RbmApiHelper rbmApiHelper = new RbmApiHelper();
 
-   // creating a suggested action based on a share location action
-   SuggestedAction suggestedAction = new SuggestedAction();
-   suggestedAction.setText(share_Location);
-   suggestedAction.setPostbackData("postback_data_1234");
-   suggestedAction.setShareLocationAction(shareLocationAction);
+            // Create suggestions for chip list
+            List<Suggestion> suggestions = new ArrayList<Suggestion>();
+            suggestions.add(
+                    new SuggestionHelper(Sugg_Rep1, "suggestion_1").getSuggestedReply());
 
-   // attaching action to a suggestion
-   Suggestion suggestion = new Suggestion();
-   suggestion.setAction(suggestedAction);
+            suggestions.add(
+                    new SuggestionHelper(Sugg_Rep2, "suggestion_2").getSuggestedReply());
 
-   suggestions.add(suggestion);
+            // Send simple text message to user
+            rbmApiHelper.sendTextMessage(
+                    Suggestion_Message,
+                    msisdn,
+                    suggestions
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-   // Send simple text message with the suggestion action
-   rbmApiHelper.sendTextMessage(
-      setText_Location,
-      msisdn,
-      suggestions
-   );
-} catch(Exception e) {
-   e.printStackTrace();
-} 
-        
     }
-    
-    
-    
-        public void openUrl(String setUrl,String setText,String sendTextMessage){
-        
-        
- try {
-   // Create an instance of the RBM API helper
-   RbmApiHelper rbmApiHelper = new RbmApiHelper();
 
-   // Create suggestions for chip list
-   List<Suggestion> suggestions = new ArrayList<Suggestion>();
+    public void dialNumber(String setPhone, String setText, String setTextMessage) {
 
-   // creating an open url suggested action
-   OpenUrlAction openUrlAction = new OpenUrlAction();
-   openUrlAction.setUrl(setUrl);
+        try {
+            // Create an instance of the RBM API helper
+            RbmApiHelper rbmApiHelper = new RbmApiHelper();
 
-   // creating a suggested action based on an open url action
-   SuggestedAction suggestedAction = new SuggestedAction();
-   suggestedAction.setText(setText);
-   suggestedAction.setPostbackData("postback_data_1234");
-   suggestedAction.setOpenUrlAction(openUrlAction);
+            // Create suggestions for chip list
+            List<Suggestion> suggestions = new ArrayList<Suggestion>();
 
-   // attaching action to a suggestion
-   Suggestion suggestion = new Suggestion();
-   suggestion.setAction(suggestedAction);
+            // creating a dial suggested action
+            DialAction dialAction = new DialAction();
+            dialAction.setPhoneNumber(setPhone);
 
-   suggestions.add(suggestion);
+            // creating a suggested action based on a dial action
+            SuggestedAction suggestedAction = new SuggestedAction();
+            suggestedAction.setText(setText);
+            suggestedAction.setPostbackData("postback_data_1234");
+            suggestedAction.setDialAction(dialAction);
 
-   // Send simple text message with the suggestion action
-   rbmApiHelper.sendTextMessage(
-      sendTextMessage,
-      msisdn,
-      suggestions
-   );
-} catch(Exception e) {
-   e.printStackTrace();
-}
-        
+            // attaching action to a suggestion
+            Suggestion suggestion = new Suggestion();
+            suggestion.setAction(suggestedAction);
+
+            suggestions.add(suggestion);
+
+            // Send simple text message with the suggestion action
+            rbmApiHelper.sendTextMessage(
+                    setTextMessage,
+                    msisdn,
+                    suggestions
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
-  
-  
-   public static void main(String[] args) {
-        FirstAgent fa=new FirstAgent("+916392100079");
-        fa.textMessage("gdfgg");
-        String title="sdfdsf"; 
-       String MessageText="ftjtfhdggdggfdhfhf";
-       String description="hfdhgfdghf";
-       String startTime="2020-06-30T19:00:00Z";
-       String endTime="2020-06-30T20:00:00Z";
-       String text="sdatetetetetegfg";
-       fa.createCalendarEvent(title, description, startTime, endTime, text, MessageText);
-            
-     
+
+    public void viewLocation(String setLocation, String viewMap, String setMessage) {
+
+        try {
+            // Create an instance of the RBM API helper
+            RbmApiHelper rbmApiHelper = new RbmApiHelper();
+
+            // Create suggestions for chip list
+            List<Suggestion> suggestions = new ArrayList<Suggestion>();
+
+            // creating a view location suggested action
+            ViewLocationAction viewLocationAction = new ViewLocationAction();
+            viewLocationAction.setQuery(setLocation);
+
+            // creating a suggested action based on a view location action
+            SuggestedAction suggestedAction = new SuggestedAction();
+            suggestedAction.setText(viewMap);
+            suggestedAction.setPostbackData("postback_data_1234");
+            suggestedAction.setViewLocationAction(viewLocationAction);
+
+            // attaching action to a suggestion
+            Suggestion suggestion = new Suggestion();
+            suggestion.setAction(suggestedAction);
+
+            suggestions.add(suggestion);
+
+            // Send simple text message with the suggestion action
+            rbmApiHelper.sendTextMessage(
+                    setMessage,
+                    msisdn,
+                    suggestions
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void shareLocation(String share_Location, String setText_Location) {
+
+        try {
+            // Create an instance of the RBM API helper
+            RbmApiHelper rbmApiHelper = new RbmApiHelper();
+
+            // Create suggestions for chip list
+            List<Suggestion> suggestions = new ArrayList<Suggestion>();
+
+            // creating a share location suggested action
+            ShareLocationAction shareLocationAction = new ShareLocationAction();
+
+            // creating a suggested action based on a share location action
+            SuggestedAction suggestedAction = new SuggestedAction();
+            suggestedAction.setText(share_Location);
+            suggestedAction.setPostbackData("postback_data_1234");
+            suggestedAction.setShareLocationAction(shareLocationAction);
+
+            // attaching action to a suggestion
+            Suggestion suggestion = new Suggestion();
+            suggestion.setAction(suggestedAction);
+
+            suggestions.add(suggestion);
+
+            // Send simple text message with the suggestion action
+            rbmApiHelper.sendTextMessage(
+                    setText_Location,
+                    msisdn,
+                    suggestions
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void openUrl(String setUrl, String setText, String sendTextMessage) {
+
+        try {
+            // Create an instance of the RBM API helper
+            RbmApiHelper rbmApiHelper = new RbmApiHelper();
+
+            // Create suggestions for chip list
+            List<Suggestion> suggestions = new ArrayList<Suggestion>();
+
+            // creating an open url suggested action
+            OpenUrlAction openUrlAction = new OpenUrlAction();
+            openUrlAction.setUrl(setUrl);
+
+            // creating a suggested action based on an open url action
+            SuggestedAction suggestedAction = new SuggestedAction();
+            suggestedAction.setText(setText);
+            suggestedAction.setPostbackData("postback_data_1234");
+            suggestedAction.setOpenUrlAction(openUrlAction);
+
+            // attaching action to a suggestion
+            Suggestion suggestion = new Suggestion();
+            suggestion.setAction(suggestedAction);
+
+            suggestions.add(suggestion);
+
+            // Send simple text message with the suggestion action
+            rbmApiHelper.sendTextMessage(
+                    sendTextMessage,
+                    msisdn,
+                    suggestions
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void bulkCapabilityCheck() {
+
+        try {
+            // Create an instance of the RBM API helper
+            RbmApiHelper rbmApiHelper = new RbmApiHelper();
+
+// Check the capabilities of the device
+            boolean capability = rbmApiHelper.getCapability("+919478548836");
+            System.out.println(capability);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void main(String[] args) {
+        FirstAgent fa = new FirstAgent("+916392100079");
+//        fa.textMessage("gdfgg");
+//        String title = "sdfdsf";
+//        String MessageText = "ftjtfhdggdggfdhfhf";
+//        String description = "hfdhgfdghf";
+//        String startTime = "2020-06-30T19:00:00Z";
+//        String endTime = "2020-06-30T20:00:00Z";
+//        String text = "sdatetetetetegfg";
+//        fa.createCalendarEvent(title, description, startTime, endTime, text, MessageText);
+        fa.bulkCapabilityCheck();
+
     }
 
 }

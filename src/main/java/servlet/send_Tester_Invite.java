@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import RMB.rbmClasses;
 import com.google.rbm.samples.FirstAgent;
 import db.dbcon;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class send_Tester_Invite extends HttpServlet {
             HttpSession s = request.getSession(false);
             String username = (String) s.getAttribute("Dusername");
             int BasicMessageCount=1;
-            out.println(username);
+            
            
 
             out.close();
@@ -54,8 +55,8 @@ public class send_Tester_Invite extends HttpServlet {
             } else {
 
                 dbcon db = new dbcon();
-                FirstAgent fa = new FirstAgent("+91" + mobile);
-                fa.sendTesterInvite();
+                rbmClasses rbm=new rbmClasses();
+                rbm.sendInvite(mobile);
                 try {
                     db.getCon("VNS_RCS");
 

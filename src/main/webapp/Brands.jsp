@@ -78,7 +78,7 @@
                  
                        
                          <%
-			 String Industry_Type=null;
+			 String Industry_Type="NA";
                                    String all_data = "select distinct(brand_name),status from rbm_table;";
                            dbcon db = new dbcon();
                           db.getCon("VNS_RCS");
