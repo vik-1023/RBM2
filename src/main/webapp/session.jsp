@@ -10,7 +10,7 @@
 
     if (username == null) {
         // No valid username found, and not on the login page, redirect to login page
-        response.sendRedirect("Login.jsp");
+        response.sendRedirect("Login");
     }
 
 %>

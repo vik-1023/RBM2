@@ -265,7 +265,15 @@
     <servlet-name>MyBilling</servlet-name>
     <url-pattern>/MyBilling/*</url-pattern>   
 </servlet-mapping>
-
+ <servlet>
+    <servlet-name>Login</servlet-name>
+    <jsp-file>/Login.jsp</jsp-file>
+</servlet>
+<!--mapping-->
+<servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/Login/*</url-pattern>   
+</servlet-mapping>
 </web-app>
 
    

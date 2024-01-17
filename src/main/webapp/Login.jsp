@@ -112,7 +112,7 @@
 					<p class="resend text-muted mb-0">
 					  Don't Have Account? <a href="Signup.jsp">Click here</a>
 					</p>
-					  <button type="submit" id="Login" class="login-btn" onclick="Login_btn()">Login</button>
+					  <button type="button" id="Login" class="login-btn" onclick="Login_btn()">Login</button>
                                             
 			  
 		</div>

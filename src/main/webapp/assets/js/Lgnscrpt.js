@@ -116,7 +116,7 @@ function Login_btn(){
 
                 if (resp.startsWith("Correct")) {
                     
-                      window.location.href = "CreateNewRcs.jsp";
+                      window.location.href = "dashboard";
                       
                 } else if (resp.startsWith("NoAccount")){
                     alert("This account is not verified");
