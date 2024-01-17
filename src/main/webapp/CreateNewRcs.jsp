@@ -211,7 +211,7 @@
                             });
 
 function view(){
-    alert("Developemrnt in Progress!!!");
+    alert("Development in Progress!!!");
 }
 
     </script>

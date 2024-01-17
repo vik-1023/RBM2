@@ -40,7 +40,7 @@ public class send_Tester_Invite extends HttpServlet {
             String status = "pending";
             String rcs_status = "pending";
             String brand_name = "virtuoso-netsoft";
-            String bot_id = "cQNtL2S2giu4oU3D";
+            String bot_id = "VNSBOT";
             String template = "NA";
             HttpSession s = request.getSession(false);
             String username = (String) s.getAttribute("Dusername");
