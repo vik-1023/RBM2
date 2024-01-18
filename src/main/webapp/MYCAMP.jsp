@@ -1,3 +1,7 @@
+
+<%@include file="session.jsp" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -42,11 +42,25 @@ public class send_Tester_Invite extends HttpServlet {
             String brand_name = "virtuoso-netsoft";
             String bot_id = "VNSBOT";
             String template = "NA";
+            int A2PSingleMessageCount = 2;
+            int A2PConversationCount = 5;
+            int P2AConversationCount = 10;
+            int MessagesSubmittedColumn = 12;
+            int MessagesSentColumn = 25;
+            int MessagesDeliveredColumn = 20;
+            int MessagesReadColumn = 24;
+            int MessagesFailedColumn = 32;
+            int MessagesRevokedColumn = 40;
+            String DeliveryRateColumn = "NA";
+            String ReadRateColumn = "NA";
+            int P2AResponsesColumn = 44;
+            String P2AResponseRateColumn = "NA";
+            int P2AMessagesColumn = 55;
+            int Aggregator = 100;
+
             HttpSession s = request.getSession(false);
             String username = (String) s.getAttribute("Dusername");
-            int BasicMessageCount=1;
-            
-           
+            int BasicMessageCount = 1;
 
             out.close();
 
@@ -55,14 +69,25 @@ public class send_Tester_Invite extends HttpServlet {
             } else {
 
                 dbcon db = new dbcon();
-                rbmClasses rbm=new rbmClasses();
+                rbmClasses rbm = new rbmClasses();
                 rbm.sendInvite(mobile);
                 try {
                     db.getCon("VNS_RCS");
 
-                    String sql = "INSERT INTO tester_invite (mobile, status, rcs_status, Brands, Bots, Templates, DateRange, username,TransactionType,BasicMessageCount) VALUES ('" + mobile + "','" + status + "','" + rcs_status + "','" + brand_name + "','" + bot_id + "','" + template + "', NOW(), '" + username + "','Domastic','"+BasicMessageCount+"')";
+                    String sql = "INSERT INTO tester_invite (mobile, status, rcs_status, Brands, Bots, Templates, DateRange, "
+                            + "username, TransactionType, BasicMessageCount, A2PSingleMessageCount, A2PConversationCount, "
+                            + "P2AConversationCount, MessagesSubmittedColumn, MessagesSentColumn, MessagesDeliveredColumn, "
+                            + "MessagesReadColumn, MessagesFailedColumn, MessagesRevokedColumn, DeliveryRateColumn, ReadRateColumn, "
+                            + "P2AResponsesColumn, P2AResponseRateColumn, P2AMessagesColumn, Aggregator) VALUES ('"
+                            + mobile + "','" + status + "','" + rcs_status + "','" + brand_name + "','" + bot_id + "','" + template + "', NOW(), '"
+                            + username + "','Domestic','" + BasicMessageCount + "','" + A2PSingleMessageCount + "','"
+                            + A2PConversationCount + "','" + P2AConversationCount + "','" + MessagesSubmittedColumn + "','"
+                            + MessagesSentColumn + "','" + MessagesDeliveredColumn + "','" + MessagesReadColumn + "','"
+                            + MessagesFailedColumn + "','" + MessagesRevokedColumn + "','" + DeliveryRateColumn + "','"
+                            + ReadRateColumn + "','" + P2AResponsesColumn + "','" + P2AResponseRateColumn + "','"
+                            + P2AMessagesColumn + "','" + Aggregator + "')";
 
-                    int pst=db.setUpdate(sql);
+                    int pst = db.setUpdate(sql);
 
                     System.out.println(pst);
                 } catch (Exception e) {

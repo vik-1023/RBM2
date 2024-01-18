@@ -1,3 +1,6 @@
+
+<%@include file="session.jsp" %>
+
 <%@page import="java.sql.ResultSet"%>
 <%@page import="db.dbcon"%>
 <!DOCTYPE html>
