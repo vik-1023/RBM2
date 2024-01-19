@@ -3,18 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
- 
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import db.dbcon;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  *
@@ -103,76 +112,148 @@ public class data_json extends HttpServlet {
         String URL = request.getParameter("URL");
         String URLSugestion1I = request.getParameter("URLSugestion1I");
         String URLSuggestion_Postback = request.getParameter("URLSuggestion_Postback");
-          String Mobile = request.getParameter("Mobile");
+        String Mobile = request.getParameter("Mobile");
         String URLimg = request.getParameter("URLimg");
         String Dial = request.getParameter("Dial");
         String Sugestion2I = request.getParameter("Sugestion2I");
         String Suggestion_Postback2 = request.getParameter("Suggestion_Postback2");
         String URLsuggestion1 = request.getParameter("URLsuggestion1");
-
+        String Jsondata = "N/A";
+        String API_Response = "N/A";
+        String TextMsg = request.getParameter("TextMsg");
+        String Template_val = request.getParameter("Template_val");
+        String botId = "N/A";
         dbcon db = new dbcon();
         db.getCon("VNS_RCS");
-         System.out.println("connection failed db");
+        System.out.println("connection failed db");
+        String BotID = "select botId from  bbrcd where Bot like '" + BotList + "';";
+        ResultSet rs = db.getResult(BotID);
 
-String Json_Data_rcv = "{\n"
-        + "   \"contentMessage\":{\n"
-        + "      \"richCard\":{\n"
-        + "         \"standaloneCard\":{\n"
-        + "            \"cardContent\":{\n"
-        + "               \"media\":{\n"
-        + "                  \"contentInfo\":{\n"
-        + "                     \"fileUrl\":\"" + URLimg + "\",\n"
-        + "                     \"forceRefresh\":false,\n"
-        + "                     \"thumbnailUrl\":\"" + URLimg + "\"\n"
-        + "                  },\n"
-        + "                  \"height\":\"MEDIUM\"\n"
-        + "               },\n"
-        + "               \"title\":\"" + title + "\",\n"
-        + "               \"description\":\"" + Description + "\",\n"
-        + "               \"suggestions\":[\n"
-        + "                  {\n"
-        + "                     \"action\":{\n"
-        + "                        \"text\":\"" + URLSugestion1I + "\",\n"
-        + "                        \"postbackData\":\"" + URLSuggestion_Postback + "\",\n"
-        + "                        \"openUrlAction\":{\n"
-        + "                           \"url\":\"" + URLsuggestion1 + "\"\n"
-        + "                        }\n"
-        + "                     }\n"
-        + "                  },\n"
-        + "                  {\n"
-        + "                     \"dialAction\": {\n"
-        + "                        \"phoneNumber\": \"" + Mobile + "\"\n"
-        + "                     }\n"
-        + "                  }\n"
-        + "               ]\n"
-        + "            },\n"
-        + "            \"thumbnailImageAlignment\":\"LEFT\",\n"
-        + "            \"cardOrientation\":\"VERTICAL\"\n"
-        + "         }\n"
-        + "      },\n"
-        + "      \"suggestions\":[\n"
-        + "         {\n"
-        + "            \"reply\": {\n"
-        + "               \"text\":\"Know more\",\n"
-        + "               \"postbackData\":\"user_query\"\n"
-        + "            }\n"
-        + "         }\n"
-        + "      ]\n"
-        + "   }\n"
-        + "}";
+        try {
+            if (rs.next()) {
 
-String data = "INSERT INTO all_data (Bot_name, Brand, Template, Json) VALUES ('" + BotList + "', '" + brand_val + "', '" + Template + "', CAST('" + Json_Data_rcv + "' AS JSON))";
+                botId = rs.getString("botId");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(data_json.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String Json_Data_rcv = "{\n"
+                + "  \"name\": \"" + Template + "\",\n"
+                + "  \"type\": \"text_message\",\n"
+                + "  \"textMessageContent\": \"" + title + "\",\n"
+                + "  \"botId\": \"" + Description + "\",\n"
+                + "  \"suggestions\": [\n"
+                + "    {\n"
+                + "      \"suggestionType\": \"url_action\",\n"
+                + "      \"url\": \"" + URLsuggestion1 + "\",\n"
+                + "      \"displayText\": \"" + URLSugestion1I + "\",\n"
+                + "      \"postback\": \"" + URLSuggestion_Postback + "\"\n"
+                + "    },\n"
+                + "    {\n"
+                + "      \"suggestionType\": \"dialer_action\",\n"
+                + "      \"phoneNumber\":  \"" + Mobile + "\",\n"
+                + "      \"displayText\": \"" + Sugestion2I + "\",\n"
+                + "      \"postback\": \"" + Suggestion_Postback2 + "\"\n"
+                + "    }\n"
+                + "  ]\n"
+                + "}";
+
+        String Json_Data_Txt = "{\n"
+                + "\"name\": \"" + Template + "\",\n"
+                + "\"type\": \"text_message\",\n"
+                + "\"textMessageContent\": \"" + TextMsg + "\"\n"
+                + "}";
+
+        if (Template_val.equals("Rich Card")) {
+            Jsondata = Json_Data_rcv;
+        } else if (Template_val.equals("Text")) {
+            Jsondata = Json_Data_Txt;
+        }
+
+        String Acess_Token = Generate_token();
+        API_Response = MsgSendApi(Acess_Token, Jsondata);
+
+        String data = "INSERT INTO all_data (Bot_name, Brand, Template, Json) VALUES ('" + BotList + "', '" + brand_val + "', '" + Template + "', CAST('" + Jsondata + "' AS JSON))";
 //out.println("data" + data);
 
-int rowsAffected = db.setUpdate(data); // Handle exception
+        int rowsAffected = db.setUpdate(data); // Handle exception
 
-//out.println(rowsAffected);
+        if (API_Response.contains("templateModel")) {
+            out.print("Template Registred");
+        } else if (API_Response.contains("error")) {
+            out.print("Failed" + API_Response);
 
-if(rowsAffected==1){
-    out.println("succ");
-    
-}
-  db.closeConection();
+        } else {
+            out.println(" Unknown Error");
+        }
+
+//        if (rowsAffected ==1) {
+//            out.println("succ");
+//
+//        }else{
+//            out.println("Request Submitted Successfully !!");
+//        }
+        db.closeConection();
+
+    }
+
+    static String Generate_token() throws IOException {
+        String accessToken = "N/A";
+        try {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            MediaType mediaType = MediaType.parse("text/plain");
+            RequestBody body = RequestBody.create(mediaType, "");
+            Request request = new Request.Builder()
+                    .url("https://auth.virtuosorbm.com/oauth2/token?grant_type=client_credentials")
+                    .method("POST", body)
+                    .addHeader("Authorization", "Basic YzNWemFHbHNZbWhoY25ScFFIWnBjblIxYjNOdmJtVjBjMjltZEM1amIyMDp6eGN2Ym5t")
+                    .build();
+            Response response = client.newCall(request).execute();
+            String resp = response.body().string();
+            System.out.println(resp);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                JsonNode jsonNode = objectMapper.readTree(resp);
+
+                // Extract access token value
+                accessToken = jsonNode.get("access_token").asText();
+
+                // Print the access token value
+                System.out.println("Access Token: " + accessToken);
+
+            } catch (IOException ex) {
+                Logger.getLogger(data_json.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(data_json.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //  String API_RSP = MsgSendApi(accessToken , Jsondata);
+        // System.out.println(API_RSP);
+        return accessToken;
+    }
+
+    static String MsgSendApi(String Token, String MessageJson) throws IOException {
+
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("rich_template_data", MessageJson).build();
+        Request request = new Request.Builder()
+                .url("https://api.virtuosorbm.com/directory/secure/api/v1/bots/QZnH0S9fAywNbEET/templates")
+                .method("POST", body)
+                .addHeader("Authorization", "Bearer " + Token)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        String resp = response.body().string();
+        System.out.println(resp);
+
+        return resp;
 
     }
     // Handle success or failure

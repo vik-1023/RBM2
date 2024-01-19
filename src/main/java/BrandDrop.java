@@ -64,7 +64,7 @@ public class BrandDrop extends HttpServlet {
          String Brand="N/a";
          
         
-           String all_data = "  select distinct(Brand) from all_data;";
+           String all_data = "  select distinct(Brand) from all_data where status='true';";
          //  out.println(all_data);
         dbcon db = new dbcon();
           db.getCon("VNS_RCS");

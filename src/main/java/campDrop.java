@@ -63,7 +63,7 @@ public class campDrop extends HttpServlet {
          String Bot_Name="N/A";
            String Brand=request.getParameter("brand");
         
-           String all_data = "  select distinct(Bot_name) from all_data where Brand like '"+Brand+"';";
+           String all_data = "  select distinct(Bot_name) from all_data where Brand like '"+Brand+"' and status='true';";
         dbcon db = new dbcon();
           db.getCon("VNS_RCS");
            System.out.println("connection failed db");
@@ -103,7 +103,7 @@ public class campDrop extends HttpServlet {
          String Template="N/A";
            String bot=request.getParameter("bot");
         
-           String all_data = "  select Template from all_data where Bot_name like '"+bot+"';";
+           String all_data = "  select Template from all_data where Bot_name like '"+bot+"' and status='true';";
          //  out.println(all_data);
         dbcon db = new dbcon();
           db.getCon("VNS_RCS");

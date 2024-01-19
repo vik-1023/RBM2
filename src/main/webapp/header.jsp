@@ -18,9 +18,9 @@
                 <h1 class="logo"><img src="assets/img/logo.png"></a></h1>
                 <nav id="navbar" class="navbar">
                     <ul>
-                        <li><a class="nav-link scrollto" id="createnew-link" href="dashboard" >MY BOTS</a></li>
+                        <!--<li><a class="nav-link scrollto" id="createnew-link" href="dashboard" >MY BOTS</a></li>-->
 <!--                        <li><a class="nav-link scrollto" id="chatbot-link" href="#hero" >MY CHATS</a></li>-->
-                        <li><a class="nav-link scrollto" id="brandsheader" href="Brands">MY BRANDS</a></li>
+                        <!--<li><a class="nav-link scrollto" id="brandsheader" href="Brands">MY BRANDS</a></li>-->
                         <li><a class="nav-link scrollto" href="Template">TEMPLATE</a></li>
                           <li><a class="nav-link scrollto" href="Mycampaigns">MY CAMPAIGNS</a></li>
                         <li><a class="nav-link scrollto o" href="Api">API</a></li>
@@ -33,11 +33,11 @@
                     <button class="btn btn-secondary1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="assets1/img/profile_img.png">
                     </button>
-                    <ul class="dropdown-menu">
+<!--                    <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    </ul>-->
                 </div>
             </div>
         </header><!-- End Header -->

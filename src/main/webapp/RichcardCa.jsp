@@ -173,30 +173,7 @@
 
             }
 
-            function test() {
-                alert("dsbnfkjbs");
-                var http = new XMLHttpRequest();
 
-                var url = 'data_json';
-
-
-                http.open('POST', url, true);
-
-                // Set the Content-type header
-                http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-                http.onreadystatechange = function () {
-                    if (http.readyState == 4 && http.status == 200) {
-                        // Handle the response
-                        console.log(http.responseText);
-                    }
-                }
-
-                // Send the request with the parameters
-                http.send( );
-
-
-            }
             var switchStatus = false;
 
             function toggle_Schedule() {
@@ -302,6 +279,9 @@
 
 
                 var Mobile = document.getElementById("Mobile").value;
+                
+                    var Template_val = document.getElementById('Template_val').value;
+                    var TextMsg = document.getElementById('TextMsg').value;
 
 
 
@@ -321,27 +301,31 @@
                         '&URL=' + encodeURIComponent(URL) +
                         '&URLSugestion1I=' + encodeURIComponent(URLSugestion1I) + '&URLSuggestion_Postback=' + encodeURIComponent(URLSuggestion_Postback) + '&URLimg=' + encodeURIComponent(URLimg) +
                         '&Dial=' + encodeURIComponent(Dial) + '&Sugestion2I=' + encodeURIComponent(Sugestion2I) + '&Suggestion_Postback2=' + encodeURIComponent(Suggestion_Postback2) +
-                        '&Mobile=' + encodeURIComponent(Mobile) + '&URLsuggestion1=' + encodeURIComponent(URLsuggestion1);
+                        '&Mobile=' + encodeURIComponent(Mobile) + '&URLsuggestion1=' + encodeURIComponent(URLsuggestion1)+ '&Template_val=' + encodeURIComponent(Template_val)+ '&TextMsg=' + encodeURIComponent(TextMsg);
 
                 http.open('POST', url, true);
 
                 // Set the Content-type header
                 http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                document.getElementById("rslt").innerHTML="Please Wait....";
 
                 http.onreadystatechange = function () {
 
                     if (http.readyState == 4 && http.status == 200) {
                         // Handle the response
-                        console.log(http.responseText);
+                    //    console.log(http.responseText);
                         //  alert(http.responseText);
-                        if (http.responseText.trim() === "succ") {
-                            alert("Template Registered");
+                      
+                          
+                             alert(http.responseText);
+                             
                             location.reload();
-                        }
+                       
 
 
 
                     }
+                    
                 }
 
                 // Send the request with the parameters
@@ -351,6 +335,13 @@
 
 
             }
+            
+            
+             function doubleCheck() {
+    if (confirm("Are You Really Want To Submit ?")) {
+         submitForm();
+    }
+}
 
 
             window.onload = BrandDetail;
@@ -432,6 +423,53 @@
 
             }
 
+            function TemplateChange() {
+
+                var Template_val = document.getElementById('Template_val').value;
+
+                var Msg_area = document.getElementById('Msg_area');
+                var Msg_area_RC = document.getElementById('Msg_area_RC');
+                var Msg_area_RC_M = document.getElementById('Msg_area_RC_M');
+                var Msg_area_M = document.getElementById('Msg_area_M');
+                if (Template_val == 'Text') {
+
+                    Msg_area.style.display = "inline";
+                    Msg_area_RC.style.display = "none";
+                    Msg_area_M.style.display = "inline";
+                    Msg_area_RC_M.style.display = "none";
+                } else if (Template_val == 'Rich Card') {
+
+                    Msg_area_RC.style.display = "inline";
+                    Msg_area.style.display = "none";
+                    Msg_area_M.style.display = "none";
+                    Msg_area_RC_M.style.display = "inline";
+                } else if (Template_val == 'none') {
+                    Msg_area_RC.style.display = "none";
+                    Msg_area.style.display = "none";
+                    Msg_area_M.style.display = "none";
+                    Msg_area_RC_M.style.display = "none";
+
+                }
+            }
+            
+             function TextMsg_F(){
+                 var TextMsg = document.getElementById("TextMsg").value;
+                var TextMsg_M = document.getElementById("TextMsg_M");
+                TextMsg_M.innerHTML = TextMsg.replaceAll("\n","<br>");
+                 
+             }
+             
+             
+              function test(){
+                   var Template_val = document.getElementById('Template_val').value;
+                    var TextMsg = document.getElementById('TextMsg').value;
+                    alert("TextMsg"+TextMsg);
+                     alert("Template_val"+Template_val);
+                    
+                  
+                  
+              }
+
 
 
 
@@ -466,16 +504,23 @@
                                 <div class="col-md-6"  >
                                     <div class="form-group">
                                         <label for="email"  >Template Name/Code:</label>
-                                        <input id="Template" type="email" class="form-control" id="email">
-                                    </div>
-                                </div>
-                                <div class="col-md-6"  >
-                                    <div class="form-group">
-                                        <label for="email"  >Image Link</label>
-                                        <input  type="email" class="form-control" placeholder="https://" id="URLimg" oninput="updateImage()">
+                                        <input id="Template" type="email" class="form-control"  >
                                     </div>
                                 </div>
 
+                                <div class="col-md-6">   
+                                    <div class="form-group">
+                                        <label for="email" id="Template" >Template Type </label>
+                                        <select  oninput="TemplateChange()"  name="One" class="form-select" id="Template_val" >
+                                            <option  value="none" >-None-</option>
+                                            <option  value="Text" >Text</option>
+                                            <option  value="Rich Card" >Rich Card</option>
+
+
+
+                                        </select>
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -483,7 +528,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email" id="Brnddrp" >Brand:</label>
-                                        <select    onclick="GetBot()"  name="One" class="form-control" id="brand_val">
+                                        <select    onclick="GetBot()"  name="One" class="form-select" id="brand_val">
 
 
                                         </select>
@@ -492,7 +537,7 @@
                                 <div class="col-md-6">                      
                                     <div class="form-group">
                                         <label for="email" id="Botdrp" >Bot:</label>
-                                        <select name="One" class="form-control"   onclick="senderID()"  id="BotList">
+                                        <select name="One" class="form-select"   onclick="senderID()"  id="BotList">
                                             <option  value="None" >None</option>
 
                                         </select>
@@ -522,89 +567,107 @@
                                     </label>
                                 </div>
                             </div>
-                            <div name="Msg_area" >
-                                <div class="form-group">
-                                    <label for="email" >Title</label>
-                                    <input type="email" oninput="ChnageTitle()" id ="title"class="form-control" id="email">
+                            <div name="Msg_area_RC" id="Msg_area_RC" class="card" style="display:none;" >
+                                <div class="cardcontent">
+
+                                    <div class="form-group">
+                                        <label for="email"  >Image Link</label>
+                                        <input  type="email" class="form-control" placeholder="https://" id="URLimg" oninput="updateImage()">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email" >Title</label>
+                                        <input type="email" oninput="ChnageTitle()" id ="title"class="form-control" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Description</label>
+                                        <textarea   oninput="descriptionChange()" id="Description"class="form-control" placeholder="Your Text Message" ></textarea>
+                                    </div>
+
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">Description</label>
-                                    <input type="email"  oninput="descriptionChange()" id="Description"class="form-control" id="email">
+
+                                <div name="suggeston1" class="card" >
+
+
+                                    <div class="row cardcontent" >
+
+                                        <label style="margin-top: 5px" for="row">Suggestion #1 (URL Type)</label>
+
+                                        <div class="col-md-3">
+                                            <select  id="URL" name="One" class="form-select">
+
+                                                <option value="URL">URL</option>
+
+
+                                            </select>
+                                        </div><!-- comment -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Suggestion Text"  id="Sugestion1I" oninput="Sugestion1IF()">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Suggestion Postback" id="Suggestion_Postback">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" id="URLsuggestion1" placeholder="URL/URI to open" class="form-control" >
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div name="suggeston1" class="card" >
+
+
+                                    <div class="row cardcontent" >
+
+                                        <label style="margin-top: 5px" for="row">Suggestion #2 (Dialer Type)</label>
+                                        <div class="col-md-3">
+
+                                            <select  id ="Dial" name="One" class="form-select">
+
+
+                                                <option value="Dial">Dial</option>
+
+                                            </select>
+                                        </div><!-- comment -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+
+                                                <input type="email" class="form-control" placeholder="Suggestion Text" oninput="Sugestion2IF()" id="Sugestion2I">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Suggestion Postback" id="Suggestion_Postback2">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Mobile Number" id="Mobile">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
-                           
-                            <div name="suggeston1" class="card" >
- 
+                            <div name="Msg_area" id="Msg_area" style="display:  none;">
 
-                                <div class="row cardcontent" >
-                                    
-                                    <label style="margin-top: 5px" for="row">Suggestion #1 (URL Type)</label>
-                                    
-                                    <div class="col-md-3">
-                                        <select  id="URL" name="One" class="form-control">
-
-                                            <option value="URL">URL</option>
-
-
-                                        </select>
-                                    </div><!-- comment -->
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Suggestion Text"  id="Sugestion1I" oninput="Sugestion1IF()">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Suggestion Postback" id="Suggestion_Postback">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input type="text" id="URLsuggestion1" placeholder="URL/URI to open" class="form-control" >
-                                        </div>
-
-                                    </div>
-
+                                <div class="form-group">
+                                    <label for="email">Text Message</label>
+                                    <textarea  oninput="TextMsg_F()"    id="TextMsg" class="form-control" placeholder="Your Text Message" style="height:260px;"  required></textarea>
                                 </div>
-                            </div>
-                            <br>
 
-                            <div name="suggeston1" class="card" >
- 
-
-                                <div class="row cardcontent" >
-                                    
-                                    <label style="margin-top: 5px" for="row">Suggestion #2 (Dialer Type)</label>
-                                    <div class="col-md-3">
-                                        
-                                        <select  id ="Dial" name="One" class="form-control">
-
-
-                                            <option value="Dial">Dial</option>
-
-                                        </select>
-                                    </div><!-- comment -->
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                           
-                                            <input type="email" class="form-control" placeholder="Suggestion Text" oninput="Sugestion2IF()" id="Sugestion2I">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Suggestion Postback" id="Suggestion_Postback2">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Mobile Number" id="Mobile">
-                                        </div>
-                                    </div>
-
-                                </div>
 
                             </div>
 
@@ -623,18 +686,20 @@
                                 <input   id="Calendar" type="datetime-local" id="birthdaytime" name="birthdaytime" class="form-control">
                             </div>
 
-                            <div class="btn-box" onclick="submitForm()">
+                            <div class="btn-box" onclick="doubleCheck()">
                                 <a >
                                     Submit
                                 </a>
+                                
                             </div>
+                            <div style="margin-top: 20px;" for="email" id="rslt" ></div>
+<!--                                                        <div class="btn-box" onclick="test()">
+                                                            <a >
+                                                                test
+                                                            </a>
+                                                        </div>-->
 
 
-                            <div class="btn-box" onclick="BrandDetail()">
-                                <a >
-                                    GetBot
-                                </a>
-                            </div>
 
 
 
@@ -655,7 +720,7 @@
                                         <div class="phone-messages">
 
 
-                                            <div class="img-box">
+                                            <div class="img-box" id="Msg_area_RC_M" style="display:  none;">
                                                 <img id="dynamicImage" style="width:100%"  >
                                                 <div class="inner-space"></div>
                                                 <span class="sell" id="title_mobile"> </span>
@@ -665,6 +730,14 @@
                                                 <span class="g1" id="suggestion1MD" ><img src="my_Camp_Data/images/globe.png" style="width:10%"><b class="sell-n" id="suggestion1M"></b></span>
                                                 <hr class="top-space">
                                                 <span class="g2" ><img src="my_Camp_Data/images/call.png" style="width:10%"><b id="Sugestion2M" class="sell-n"></b></span>
+
+                                            </div>
+
+                                            <div class="img-box"  id="Msg_area_M" style="display:  none;">
+
+                                                <div id="TextMsg_M">
+ 
+                                                </div>
 
                                             </div>
                                             <!--  <div class="message message-you">
@@ -706,90 +779,14 @@
         <!-- end service section -->
 
         <!-- info section -->
-        <section class="info_section ">
-            <div class="container">
-                <h4>
-                    Get In Touch
-                </h4>
-                <div class="row">
-                    <div class="col-lg-10 mx-auto">
-                        <div class="info_items">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <a href="">
-                                        <div class="item ">
-                                            <div class="img-box ">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            </div>
-                                            <p>
-                                                Lorem Ipsum is simply dummy text
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="">
-                                        <div class="item ">
-                                            <div class="img-box ">
-                                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                            </div>
-                                            <p>
-                                                +91 0000000
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="">
-                                        <div class="item ">
-                                            <div class="img-box">
-                                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                                            </div>
-                                            <p>
-                                                info@gmail.com
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="social-box">
-                <h4>
-                    Follow Us
-                </h4>
-                <div class="box">
-                    <a href="">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa fa-youtube" aria-hidden="true"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa fa-instagram" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+
 
 
 
         <!-- end info_section -->
 
         <!-- footer section -->
-        <footer class="footer_section">
-            <div class="container">
-                <p>
-                    &copy; <span id="displayDateYear"></span> All Rights Reserved By
-                    <a href="">VNS</a>
-                </p>
-            </div>
-        </footer>
+
         <!-- footer section -->
         <script>
             $("#refreshButton").on("click", function () {

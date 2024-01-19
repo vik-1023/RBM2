@@ -1,472 +1,564 @@
 
+
 <%@include file="session.jsp" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>My Campaigns</title>
-    <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <title>My Campaigns</title>
+        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <!-- Google Fonts -->
+        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-  <script >
-      
-      
-       window.onload=BrandDetail;
-  
- function BrandDetail() {
- 
-    // Log that the function has started
- var url = "BrandDrop";
- 
-    var xhr = new XMLHttpRequest();
- 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-  
-            if (xhr.status === 200) {
-                try {
-                    // Log that JSON parsing is about to start
-                   
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+        <!-- Vendor CSS Files -->
+        <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+        <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+        <script >
 
-                    var responseText = xhr.responseText;
-                  
-                    if (responseText) {
-                        
-                        const myJSON = JSON.parse(responseText);
-                        if (myJSON.Array1) {
-                            
-                        
-                           
 
-                            Drp_val_jsn_call_brand(myJSON.Array1);
+            window.onload = BrandDetail;
+
+            function BrandDetail() {
+
+                // Log that the function has started
+                var url = "BrandDrop";
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+
+                        if (xhr.status === 200) {
+                            try {
+                                // Log that JSON parsing is about to start
+
+
+                                var responseText = xhr.responseText;
+
+                                if (responseText) {
+
+                                    const myJSON = JSON.parse(responseText);
+                                    if (myJSON.Array1) {
+
+
+
+
+                                        Drp_val_jsn_call_brand(myJSON.Array1);
+                                        getBot();
+
+                                    } else {
+                                        console.error("JSON structure is not as expected:", myJSON);
+
+                                    }
+                                } else {
+                                    console.error("Empty response text");
+
+                                }
+                                // Log that JSON parsing is completed
+
+                            } catch (error) {
+                                console.error("Error parsing JSON:", error);
+
+                            }
                         } else {
-                            console.error("JSON structure is not as expected:", myJSON);
+                            console.error("Request failed with status:", xhr.status);
 
                         }
-                    } else {
-                        console.error("Empty response text");
+                        // Log that the function has completed
 
                     }
-                    // Log that JSON parsing is completed
-                   
-                } catch (error) {
-                    console.error("Error parsing JSON:", error);
+                };
 
+                xhr.open("GET", url, true);
+                xhr.send();
+            }
+
+
+            function Drp_val_jsn_call_brand(Drp_val_jsn) {
+
+
+                // Log that the function has started
+
+
+
+                var dropdown = document.getElementById('brand_val');
+                dropdown.innerHTML = ''; // Clear existing options
+
+                for (var i = 0; i < Drp_val_jsn.length; i++) {
+                    var opt = Drp_val_jsn[i];
+
+                    var el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
+
+                    dropdown.appendChild(el);
                 }
-            } else {
-                console.error("Request failed with status:", xhr.status);
+                // Log that the function has completed
 
             }
-            // Log that the function has completed
-           
-        }
-    };
+            function getBot() {
 
-    xhr.open("GET", url, true);
-    xhr.send();
-}
+                // Log that the function has started
+                var brand = document.getElementById("brand_val").value;
 
 
-function Drp_val_jsn_call_brand(Drp_val_jsn) {
-    
-
-    // Log that the function has started
- 
 
 
-    var dropdown = document.getElementById('brand_val');
-    dropdown.innerHTML = ''; // Clear existing options
+                var url = "campDrop?brand=" + brand;
 
-    for (var i = 0; i < Drp_val_jsn.length; i++) {
-        var opt = Drp_val_jsn[i];
+                var xhr = new XMLHttpRequest();
 
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
 
-        dropdown.appendChild(el);
-    }
-    // Log that the function has completed
-   
-}
-      function getBot() {
- 
-    // Log that the function has started
-   var brand= document.getElementById("brand_val").value;
-    
+                        if (xhr.status === 200) {
+                            try {
+                                // Log that JSON parsing is about to start
 
-    
 
-    var url = "campDrop?brand="+brand;
- 
-    var xhr = new XMLHttpRequest();
+                                var responseText = xhr.responseText;
+                                if (responseText) {
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-  
-            if (xhr.status === 200) {
-                try {
-                    // Log that JSON parsing is about to start
-                   
+                                    const myJSON = JSON.parse(responseText);
+                                    if (myJSON.Array1) {
 
-                    var responseText = xhr.responseText;
-                    if (responseText) {
-                        
-                        const myJSON = JSON.parse(responseText);
-                        if (myJSON.Array1) {
-                            
-                        
-                           
 
-                            Drp_val_jsn_call_bot(myJSON.Array1);
+
+                                       
+                                        Drp_val_jsn_call_bot(myJSON.Array1);
+                                         GetTemplate();
+                                    } else {
+                                        console.error("JSON structure is not as expected:", myJSON);
+
+                                    }
+                                } else {
+                                    console.error("Empty response text");
+
+                                }
+                                // Log that JSON parsing is completed
+
+                            } catch (error) {
+                                console.error("Error parsing JSON:", error);
+
+                            }
                         } else {
-                            console.error("JSON structure is not as expected:", myJSON);
+                            console.error("Request failed with status:", xhr.status);
 
                         }
-                    } else {
-                        console.error("Empty response text");
+                        // Log that the function has completed
 
                     }
-                    // Log that JSON parsing is completed
-                   
-                } catch (error) {
-                    console.error("Error parsing JSON:", error);
+                };
 
+                xhr.open("GET", url, true);
+                xhr.send();
+            }
+
+
+            function Drp_val_jsn_call_bot(Drp_val_jsn) {
+
+
+                // Log that the function has started
+
+
+
+                var dropdown = document.getElementById('BotList');
+                dropdown.innerHTML = ''; // Clear existing options
+
+                for (var i = 0; i < Drp_val_jsn.length; i++) {
+                    var opt = Drp_val_jsn[i];
+
+                    var el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
+
+                    dropdown.appendChild(el);
                 }
-            } else {
-                console.error("Request failed with status:", xhr.status);
+                // Log that the function has completed
 
             }
-            // Log that the function has completed
-           
-        }
-    };
 
-    xhr.open("GET", url, true);
-    xhr.send();
-}
+            function GetTemplate() {
 
 
-function Drp_val_jsn_call_bot(Drp_val_jsn) {
-    
-
-    // Log that the function has started
- 
+                // Log that the function has started
+                var bot = document.getElementById("BotList").value;
 
 
-    var dropdown = document.getElementById('BotList');
-    dropdown.innerHTML = ''; // Clear existing options
 
-    for (var i = 0; i < Drp_val_jsn.length; i++) {
-        var opt = Drp_val_jsn[i];
 
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
 
-        dropdown.appendChild(el);
-    }
-    // Log that the function has completed
-   
-}
 
-function GetTemplate(){
- 
-    
-      // Log that the function has started
-   var bot= document.getElementById("BotList").value;
- 
-    
 
-    
+                var url = "campDrop?bot=" + bot;
 
-    var url = "campDrop?bot="+bot;
- 
-    var xhr = new XMLHttpRequest();
+                var xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-  
-            if (xhr.status === 200) {
-                try {
-                    // Log that JSON parsing is about to start
-                   
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
 
-                    var responseText = xhr.responseText;
-                     
- 
-                    if (responseText) {
-                        
-                        const myJSON = JSON.parse(responseText);
-                        if (myJSON.Array1) {
-                            
-                        
-                           
+                        if (xhr.status === 200) {
+                            try {
+                                // Log that JSON parsing is about to start
 
-                            Drp_val_jsn_call_template(myJSON.Array1);
+
+                                var responseText = xhr.responseText;
+
+
+                                if (responseText) {
+
+                                    const myJSON = JSON.parse(responseText);
+                                    if (myJSON.Array1) {
+
+
+
+
+                                        Drp_val_jsn_call_template(myJSON.Array1);
+                                    } else {
+                                        console.error("JSON structure is not as expected:", myJSON);
+
+                                    }
+                                } else {
+                                    console.error("Empty response text");
+
+                                }
+                                // Log that JSON parsing is completed
+
+                            } catch (error) {
+                                console.error("Error parsing JSON:", error);
+
+                            }
                         } else {
-                            console.error("JSON structure is not as expected:", myJSON);
+                            console.error("Request failed with status:", xhr.status);
 
                         }
-                    } else {
-                        console.error("Empty response text");
+                        // Log that the function has completed
 
                     }
-                    // Log that JSON parsing is completed
-                   
-                } catch (error) {
-                    console.error("Error parsing JSON:", error);
+                };
 
-                }
-            } else {
-                console.error("Request failed with status:", xhr.status);
+
+                xhr.open("POST", url, true);
+                xhr.send();
+
 
             }
-            // Log that the function has completed
-           
-        }
-    };
+
+            function Drp_val_jsn_call_template(Drp_val_jsn) {
 
 
-    xhr.open("POST", url, true);
-    xhr.send();
-    
-    
-}
+                // Log that the function has started
 
-function Drp_val_jsn_call_template(Drp_val_jsn) {
-    
 
-    // Log that the function has started
- 
+                var dropdown = document.getElementById('TemplateList');
+                dropdown.innerHTML = ''; // Clear existing options
 
-    var dropdown = document.getElementById('TemplateList');
-    dropdown.innerHTML = ''; // Clear existing options
+                for (var i = 0; i < Drp_val_jsn.length; i++) {
+                    var opt = Drp_val_jsn[i];
 
-    for (var i = 0; i < Drp_val_jsn.length; i++) {
-        var opt = Drp_val_jsn[i];
+                    var el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
 
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
+                    dropdown.appendChild(el);
+                }
+                // Log that the function has completed
 
-        dropdown.appendChild(el);
-    }
-    // Log that the function has completed
+            }
+
+
+            function PushCampaign() {
+                var bot = document.getElementById("BotList").value;
+                var Template = document.getElementById("TemplateList").value;
+                var data = document.getElementById("msisdns").value;
+                var brand = document.getElementById("brand_val").value;
+
+
+
+                data = data.replaceAll('\n', ',');
+
+                if (bot === "NA") {
+                    alert("Invalid Bot!!!");
+                    return;
+                }
+                if (brand == "NA") {
+                    alert("Invalid Brand!!!");
+                    return;
+                }
+
+                if (Template == "NA") {
+                    alert("Invalid Template!!!");
+                    return;
+                }
+                document.getElementById("result").innerHTML = "Fetching Data,Please Wait!!!";
+                var xmlhttp;
+
+                if (window.XMLHttpRequest)
+                {
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        document.getElementById("result").innerHTML = xmlhttp.responseText.trim();
+                    }
+                }
+
+                xmlhttp.open("get", "campaign_resp.jsp?Template=" + Template + "&bot=" + bot + "&msisdns=" + data + "&brand=brand");
+
+                xmlhttp.send();
+
+            }
+
+
+
+        </script>
+        <style>
+
+            .card {
+                /* Add shadows to create the "card" effect */
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.1s;
+                border-radius: 5px;
+            }
+
+            /* On mouse-over, add a deeper shadow */
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+            /* Add some padding inside the card container */
+            .cardcontent {
+                padding: 2px 16px;
+            }
+
+            .row{
+                margin-top: 10px;
+                margin-bottom: 10px;
+
+            }
+        </style>
+        <!-- Favicons -->
+        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+        <!-- Vendor CSS Files -->
+        <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+        <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="assets/css/style24.css" rel="stylesheet">
+
+
+    </head>
+    <%@include file="header.jsp" %>
+    <body>
+
    
-}
-  </script>
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style24.css" rel="stylesheet">
+        <!-- ======= Hero Section ======= -->
+        <section id="hero1" class="d-flex align-items-right">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row justify-content-right">
 
-  
-</head>
- <%@include file="header.jsp" %>
-<body>
- 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
- 
-  </header><!-- End Header -->
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label class="s_bot" for="search">My Campaigns</label>
+                    </div>
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero1" class="d-flex align-items-right">
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-      <div class="row justify-content-right">
-	 
-	    <div class="col-md-6 col-sm-6 col-xs-12">
-		 <label class="s_bot" for="search">My Campaigns</label>
-		</div>
-		
-		 <div class="row">
-    
-    <div class="col-sm-4 col-md-4 mt-10">
-    <label for="brand_val" class="form-label">Brands</label>
-      <select id="brand_val" onclick="getBot()" class="form-select">
-        <option>None</option>
-      
-      </select>
-   </div>
-    <div class="col-sm-4 col-md-4 mt-10">
-    <label for="disabledSelect" class="form-label">Bots</label>
-      <select id="BotList" onclick="GetTemplate()"  class="form-select">
-        <option>None</option>
-      </select>
-   </div>
-                     
-                       <div class="col-sm-4 col-md-4 mt-10">
-    <label for="disabledSelect" class="form-label">Template</label>
-      <select id="TemplateList" class="form-select">
-        <option>None</option>
-      </select>
-   </div>
-                     
-                     
-                       <div class="form-group"  >
-		  <label for="myfile"  >Select a file:</label>
-          <input type="file" id="myfile" name="myfile">
-          </div>
-   
-     
-    <div class="col-sm-4 col-md-4 mt-10">
-    <button    GetTemplate type="submit" class="btn btn-primary1" >Submit </button> 
-   </div>
+                    <div class="row">
+
+                        <div class="col-sm-4 col-md-4 mt-10">
+                            <label for="brand_val" class="form-label">Brands</label>
+                            <select id="brand_val" onclick="getBot()" class="form-select">
+                                <option value="NA">None</option>
+
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-md-4 mt-10">
+                            <label for="disabledSelect" class="form-label">Bots</label>
+                            <select id="BotList" onclick="GetTemplate()"  class="form-select">
+                                <option value="NA">None</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4 col-md-4 mt-10">
+                            <label for="disabledSelect" class="form-label">Template</label>
+                            <select id="TemplateList" class="form-select">
+                                <option value="NA">None</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!--                        <div class="form-group"  >
+                                                <label for="myfile"  >Select a file:</label>
+                                                <input type="file" id="myfile" name="myfile">
+                                            </div>-->
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label" >Mobile Numbers <span  style="color: gray;font-size: smaller">(Separated by ',' or Newline '\n')</span></label>
+                            <textarea rows="4" class="form-control" id="msisdns" name="msisdns" > </textarea>
+
+                        </div> 
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-4 col-md-4 mt-10">
+                            <button    type="button" class="form-control btn btn-primary" onclick="PushCampaign()" >Submit </button> 
+                        </div>
+                    </div>
+
+
+                    <div id="result">
+                        
+                        
+                        
+                    </div>
+
+
+                    <!--<div class="col-md-12 col-sm-12 colxs-12 table-responsive">
+                
+                      <div class="main-table">
+           <table class="table">
+                        <thead class="table-top">
+                              <tr class="bg-color">
+                                <th scope="col">Brands Submitted</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                 <th scope="col"></th>
+                              
+                              </tr>
+                        </thead>
+                        <tbody class="table-data">
+                              <tr>
+                                <th scope="row">Brand Name</th>
+                                <td><b>Industry Type</b></td>
+                               
+                                <td><b>Status</b></td>
+                                 <td><b>Action</b></td>
+                                  
+                              </tr>
+                              <tr>
+                                <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
+                                <td>Virtuoso Netsoft</td>
+                                <td><span class="Creation">Creation Rejected</span></td>
+                                 <td><span class="view">View Details</span></td>
+                                 
+                              </tr>
+                      <tr>
+                                <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
+                                <td>Virtuoso Netsoft</td>
+                                <td><span class="Creation">Creation Rejected</span></td>
+                                 <td><span class="view">View Details</span></td>
+                                 
+                              </tr>
+                              <tr>
+                                <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
+                                <td>Virtuoso Netsoft</td>
+                                <td><span class="Creation">Creation Rejected</span></td>
+                                 <td><span class="view">View Details</span></td>
+                                 
+                              </tr>
+                              <tr>
+                                <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
+                                <td>Virtuoso Netsoft</td>
+                                <td><span class="Creation">Creation Rejected</span></td>
+                                 <td><span class="view">View Details</span></td>
+                                 
+                              </tr>
+                              <tr>
+                                <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
+                                <td>Virtuoso Netsoft</td>
+                                <td><span class="Creation">Creation Rejected</span></td>
+                                 <td><span class="view">View Details</span></td>
+                                 
+                              </tr>
+                        </tbody> -->
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--  <div class="text-center">
+           <a href="#about" class="btn-get-started scrollto">Get Started</a>
+         </div>
+        -->
+
     </div>
-		 
-		   
-	      <!--<div class="col-md-12 col-sm-12 colxs-12 table-responsive">
-	  
-		<div class="main-table">
-     <table class="table">
-		  <thead class="table-top">
-			<tr class="bg-color">
-			  <th scope="col">Brands Submitted</th>
-			  <th scope="col"></th>
-			  <th scope="col"></th>
-			  <th scope="col"></th>
-			   <th scope="col"></th>
-			
-			</tr>
-		  </thead>
-		  <tbody class="table-data">
-			<tr>
-			  <th scope="row">Brand Name</th>
-			  <td><b>Industry Type</b></td>
-			 
-			  <td><b>Status</b></td>
-			   <td><b>Action</b></td>
-			    
-			</tr>
-			<tr>
-			  <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
-			  <td>Virtuoso Netsoft</td>
-			  <td><span class="Creation">Creation Rejected</span></td>
-			   <td><span class="view">View Details</span></td>
-			   
-			</tr>
-		<tr>
-			  <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
-			  <td>Virtuoso Netsoft</td>
-			  <td><span class="Creation">Creation Rejected</span></td>
-			   <td><span class="view">View Details</span></td>
-			   
-			</tr>
-			<tr>
-			  <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
-			  <td>Virtuoso Netsoft</td>
-			  <td><span class="Creation">Creation Rejected</span></td>
-			   <td><span class="view">View Details</span></td>
-			   
-			</tr>
-			<tr>
-			  <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
-			  <td>Virtuoso Netsoft</td>
-			  <td><span class="Creation">Creation Rejected</span></td>
-			   <td><span class="view">View Details</span></td>
-			   
-			</tr>
-			<tr>
-			  <th scope="row"><span class="name-img"><img src="assets/img/table-img.jpg">Name</span></th> 
-			  <td>Virtuoso Netsoft</td>
-			  <td><span class="Creation">Creation Rejected</span></td>
-			   <td><span class="view">View Details</span></td>
-			   
-			</tr>
-		  </tbody> -->
-		</table>
-      </div>
-	  </div>
-	  </div>
-     <!--  <div class="text-center">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
-      </div>
- -->
-     
-    </div>
-  </section><!-- End Hero -->
-
-
-  
+</section><!-- End Hero -->
 
 
 
-    
 
-    
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
 
-   
+
+
+
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+
+
 
     <div class="container d-md-flex py-4">
 
-      <div class="me-md-auto text-center text-md-start">
-        <div class="copyright">
-          &copy; Copyright <strong><span>VNS</span></strong>. All Rights Reserved
+        <div class="me-md-auto text-center text-md-start">
+            <div class="copyright">
+                &copy; Copyright <strong><span>VNS</span></strong>. All Rights Reserved
+            </div>
+
         </div>
-       
-      </div>
-      <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div>
+        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
     </div>
-  </footer><!-- End Footer -->
+</footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+<!-- Vendor JS Files -->
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
 
 </body>
 
