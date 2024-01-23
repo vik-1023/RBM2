@@ -962,6 +962,16 @@ section {
     background-color: #2487ce;
     border-color: #2487ce;
 }
+
+
+.btn.btn-primary2 {
+    float: right;
+    margin-top: 22px;
+    background-color: #3f8e9b;
+    border-color: #3f8e9b;
+    width: 100%;
+    color: #ffff;
+}
 .no-result {
     border: 0px solid #ccc;
     border-radius: 26px;
@@ -1095,4 +1105,9 @@ section {
         width: 120px;
         display: inline-flex;
     }
+}
+
+a.back {
+    text-align: right;
+    display: block;
 }

@@ -1,10 +1,17 @@
 package RMB;
 
+import db.dbcon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.json.JSONObject;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -16,27 +23,82 @@ import okhttp3.Response;
  */
 public class rbmClasses {
 
-    static String ApiToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJDaGF0Ym90LW1lc3NhZ2UiLCJyY3MtY29uZmlnIiwia29ubmVjdCIsIndiYXBpIiwiZ29vZ2xlIl0sImV4cCI6MTcwNTQyOTExNCwianRpIjoiYzg0OWIxYzktNGRkZi00ODczLTk3NzctYjQ2YTI0MWQyODcyIiwiY2xpZW50X2lkIjoiUVpuSDBTOWZBeXdOYkVFVCJ9.YVnfBf-tHfKseyTbTTRH-7mqSKWkdnR-w4BunT95ESJgclI04FxCGnVpuP7g7euD7L-wNqhvt375aCFz-iuxtve0nWNT7aMSLtHs8_36Y-4THJX4tp8ODRhsPKHEO3AYEPW_twJk-y4Ms99PKGbE0jsVa9xEfm90UwbP733aeTrYo4-4Ti66bw3u9YLUawYnXOTRA0f1f3AM2HADOoUgkOl6z0HzqfJDY4CvETb0k8D6I8qqf6TwLE3xKNcgVG7JLqc_60jaW6tPhlXhkw9HLzTmwY52nc8QgpsWBQdUVMII7MBY8LiD88sjbYvEgVtE4xz_zGC_uVdNOQtYdtX88w";
+    public static final String AUTH_SEPARATOR = ":";
+    public static String token = "";
 
-    public void sendInvite(String num) {
+    public String tokenGenerate(String id,String secret) {
 
         try {
+
+            String secretKey = id
+                    + AUTH_SEPARATOR
+                    + secret;
+            byte[] tokenBytes = secretKey.getBytes();
+            String token64 = Base64.getEncoder().withoutPadding().encodeToString(tokenBytes);
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
-            MediaType mediaType = MediaType.parse("application/json");
-            RequestBody body = RequestBody.create(mediaType, "{\r\nstatusCode: \"Success\",\r\nresponse: \"Submitted, Tester Invite Sent\"\r\n}");
+            MediaType mediaType = MediaType.parse("text/plain");
+            RequestBody body = RequestBody.create(mediaType, "");
             Request request = new Request.Builder()
-                    .url("https://api.virbm.in/rcs/v1/phones/+91" + num + "/testers?botId=QZnH0S9fAywNbEET")
+                    .url("https://auth.virtuosorbm.com/oauth2/token?grant_type=client_credentials")
                     .method("POST", body)
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("Authorization", "Bearer " + ApiToken)
-                    //.addHeader("Cookie", "AWSALB=lZ3XF+1H0uyInYHhMEyYnCZFXcLeqUydoAwww/5l1m+9hmv7H+01ViwW3OFbDL5PDeRmRj8e89ShdWGvMYvQoPceKfJWCB+lxHPj7iJPWATRkzOiCJtNggWxuzdD; AWSALBCORS=lZ3XF+1H0uyInYHhMEyYnCZFXcLeqUydoAwww/5l1m+9hmv7H+01ViwW3OFbDL5PDeRmRj8e89ShdWGvMYvQoPceKfJWCB+lxHPj7iJPWATRkzOiCJtNggWxuzdD")
+                    .addHeader("Authorization", "Basic " + token64)
                     .build();
             Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
-            System.out.println(response);
+            String res = response.body().string();
+            JSONObject jobj = new JSONObject(res);
+            if (jobj.has("access_token")) {
+                token = jobj.getString("access_token");
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return token;
+
+    }
+
+    String ApiToken = this.token;
+
+    public void sendInvite(String num) {
+        try {
+            dbcon db = new dbcon();
+            db.getCon("VNS_RCS");
+            String sql = "select botId,CAST(AES_DECRYPT(additional_value,GoogleId) as CHAR) from Brand_Bot_Details where Bot='Bulksms';";
+            ResultSet rs = db.getResult(sql);
+            String id = "";
+            String secret = "";
+            if (rs.next()) {
+                id = rs.getString(1);
+                secret = rs.getString(2);
+            } else {
+                System.out.println("Unknown Bot !!!");
+                
+            }
+            
+            String token = new rbmClasses().tokenGenerate(id,secret);
+            
+            try {
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+                MediaType mediaType = MediaType.parse("application/json");
+               RequestBody body = RequestBody.create(mediaType, "");
+               Request request = new Request.Builder()
+                        .url("https://api.virtuosorbm.com/v1/phones/+91" + num + "/testers?botId="+id)
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("Authorization", "Bearer " + token)
+                        //.addHeader("Cookie", "AWSALB=lZ3XF+1H0uyInYHhMEyYnCZFXcLeqUydoAwww/5l1m+9hmv7H+01ViwW3OFbDL5PDeRmRj8e89ShdWGvMYvQoPceKfJWCB+lxHPj7iJPWATRkzOiCJtNggWxuzdD; AWSALBCORS=lZ3XF+1H0uyInYHhMEyYnCZFXcLeqUydoAwww/5l1m+9hmv7H+01ViwW3OFbDL5PDeRmRj8e89ShdWGvMYvQoPceKfJWCB+lxHPj7iJPWATRkzOiCJtNggWxuzdD")
+                        .build();
+                Response response = client.newCall(request).execute();
+                System.out.println(response.body().string());
+                System.out.println(response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(rbmClasses.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 

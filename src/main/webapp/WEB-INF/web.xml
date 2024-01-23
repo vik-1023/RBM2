@@ -94,7 +94,7 @@
    
     
     <servlet>
-          <servlet-name>suggestionServlet</servlet-name>
+        <servlet-name>suggestionServlet</servlet-name>
         <servlet-class>/suggestionServlet</servlet-class>
     </servlet>
 
@@ -187,93 +187,123 @@
     <servlet-mapping>
         <servlet-name>TokenServlet</servlet-name>
         <url-pattern>/TokenServlet</url-pattern>
-         </servlet-mapping>
-            <servlet-mapping>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>suggestionServlet</servlet-name>
         <url-pattern>/suggestionServlet</url-pattern>
     </servlet-mapping>
     
-      <session-config>
+    <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     
-     <welcome-file-list>  
-   <welcome-file>dashboard</welcome-file>  
-  </welcome-file-list>
+    <welcome-file-list>  
+        <welcome-file>dashboard</welcome-file>  
+    </welcome-file-list>
   
   
-  <!-- jsp declarations -->
+    <!-- jsp declarations -->
   
-  <servlet>
-    <servlet-name>dashboard</servlet-name>
-    <jsp-file>/CreateNewRcs.jsp</jsp-file>
-</servlet>
-<!--mapping-->
-<servlet-mapping>
-    <servlet-name>dashboard</servlet-name>
-    <url-pattern>/dashboard/*</url-pattern>   
-</servlet-mapping>
+    <servlet>
+        <servlet-name>dashboard</servlet-name>
+        <jsp-file>/CreateNewRcs.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>dashboard</servlet-name>
+        <url-pattern>/dashboard/*</url-pattern>   
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>Api</servlet-name>
-    <jsp-file>/Api.jsp</jsp-file>
-</servlet>
-<!--mapping-->
-<servlet-mapping>
-    <servlet-name>Api</servlet-name>
-    <url-pattern>/Api/*</url-pattern>   
-</servlet-mapping>
+    <servlet>
+        <servlet-name>Api</servlet-name>
+        <jsp-file>/Api.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>Api</servlet-name>
+        <url-pattern>/Api/*</url-pattern>   
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>Brands</servlet-name>
-    <jsp-file>/Brands.jsp</jsp-file>
-</servlet>
-<!--mapping-->
-<servlet-mapping>
-    <servlet-name>Brands</servlet-name>
-    <url-pattern>/Brands/*</url-pattern>   
-</servlet-mapping>
+    <servlet>
+        <servlet-name>Brands</servlet-name>
+        <jsp-file>/Brands.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>Brands</servlet-name>
+        <url-pattern>/Brands/*</url-pattern>   
+    </servlet-mapping>
 
- <servlet>
-    <servlet-name>Template</servlet-name>
-    <jsp-file>/RichcardCa.jsp</jsp-file>
-</servlet>
-<!--mapping-->
-<servlet-mapping>
-    <servlet-name>Template</servlet-name>
-    <url-pattern>/Template/*</url-pattern>   
-</servlet-mapping>
+    <servlet>
+        <servlet-name>Template</servlet-name>
+        <jsp-file>/RichcardCa.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>Template</servlet-name>
+        <url-pattern>/Template/*</url-pattern>   
+    </servlet-mapping>
 
- <servlet>
-    <servlet-name>Mycampaigns</servlet-name>
-    <jsp-file>/MYCAMP.jsp</jsp-file>
-</servlet>
-<!--mapping-->
-<servlet-mapping>
-    <servlet-name>Mycampaigns</servlet-name>
-    <url-pattern>/Mycampaigns/*</url-pattern>   
-</servlet-mapping>
+    <servlet>
+        <servlet-name>Mycampaigns</servlet-name>
+        <jsp-file>/MYCAMP.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>Mycampaigns</servlet-name>
+        <url-pattern>/Mycampaigns/*</url-pattern>   
+    </servlet-mapping>
 
- <servlet>
-    <servlet-name>MyBilling</servlet-name>
-    <jsp-file>/billingD.jsp</jsp-file>
-</servlet>
-<!--mapping-->
-<servlet-mapping>
-    <servlet-name>MyBilling</servlet-name>
-    <url-pattern>/MyBilling/*</url-pattern>   
-</servlet-mapping>
- <servlet>
-    <servlet-name>Login</servlet-name>
-    <jsp-file>/Login.jsp</jsp-file>
-</servlet>
-<!--mapping-->
-<servlet-mapping>
-    <servlet-name>Login</servlet-name>
-    <url-pattern>/Login/*</url-pattern>   
-</servlet-mapping>
+    <servlet>
+        <servlet-name>MyBilling</servlet-name>
+        <jsp-file>/billingD.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>MyBilling</servlet-name>
+        <url-pattern>/MyBilling/*</url-pattern>   
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <jsp-file>/Login.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login/*</url-pattern>   
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name>BotConsole</servlet-name>
+        <jsp-file>/bot_details.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>BotConsole</servlet-name>
+        <url-pattern>/BotConsole/*</url-pattern>   
+    </servlet-mapping>
+    
+         <servlet>
+        <servlet-name>TemplateList</servlet-name>
+        <jsp-file>/template_list.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>TemplateList</servlet-name>
+        <url-pattern>/TemplateList/*</url-pattern>   
+    </servlet-mapping>
+    
+         <servlet>
+        <servlet-name>ViewDetails</servlet-name>
+        <jsp-file>/viewDetail.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>ViewDetails</servlet-name>
+        <url-pattern>/ViewDetails/*</url-pattern>   
+    </servlet-mapping>
 </web-app>
 
    

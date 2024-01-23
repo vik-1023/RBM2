@@ -580,5 +580,69 @@
                                                         width: 102px;
                                                     }*/
 
+ #customRangeInput1 {
+                            border: 1px solid #ccc;
+                            margin: 0px;
+                            width: 655px;
+                            background-color: #f6f6f6;
+                            height: 130px;
+                            padding: 12px 30px;
+                            border-radius: 2px;
+                        }
+
+                        #customEndDate1{
+                            height: 41px;
+                            width: 164px;
+                            margin-left: 10px;
+                            
+                        }
+                        #customStartDate1{
+                            height: 41px;
+                            width: 164px;
+                            margin-left: 3px
+                        }
+
+                        #customRangeInput1 button {
+                            position: relative;
+                            top: -36px;
+                            left: 48px;
+                            background-color: #f6f6f6;
+                            border: 1px solid #ccc;
+                            width: 96px;
+                            height: 44px;
+                        }
+
+                         #customRangeInputs {
+                            border: 1px solid #ccc;
+                            margin: 0px;
+                            width: 655px;
+                            background-color: #f6f6f6;
+                            height: 130px;
+                            padding: 12px 30px;
+                            border-radius: 2px;
+                        }
+
+                        #customEndDate{
+                            height: 41px;
+                            width: 164px;
+                            margin-left: 10px;
+                            
+                        }
+                        #customStartDate{
+                            height: 41px;
+                            width: 164px;
+                            margin-left: 3px
+                        }
+
+                        #customRangeInputs button {
+                            position: relative;
+                            top: -36px;
+                            left: 48px;
+                            background-color: #f6f6f6;
+                            border: 1px solid #ccc;
+                            width: 96px;
+                            height: 44px;
+                        }
+
                     </style>
                     </html>

@@ -207,9 +207,16 @@
             function descriptionChange() {
                 var Description = document.getElementById("Description").value;
                 var description_mobile = document.getElementById("description_mobile");
+            
+                // Replace spaces with non-breaking spaces
+                Description = Description.replace(/ /g, '&nbsp;');
+            
+                // Replace newlines with <br> tags
+                Description = Description.replace(/\n/g, '<br>');
+            
                 description_mobile.innerHTML = Description;
-
             }
+
             function Sugestion1IF() {
 
 
@@ -372,6 +379,7 @@
 
 
                                         Drp_val_jsn_call_brand(myJSON.Array1);
+										GetBot();
                                     } else {
                                         console.error("JSON structure is not as expected:", myJSON);
 
@@ -581,7 +589,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Description</label>
-                                        <textarea   oninput="descriptionChange()" id="Description"class="form-control" placeholder="Your Text Message" ></textarea>
+                                        <textarea   oninput="descriptionChange()" id="Description"class="form-control" placeholder="Your Text Message" style="height:140px;"></textarea>
                                     </div>
 
                                 </div>
@@ -593,7 +601,7 @@
 
                                         <label style="margin-top: 5px" for="row">Suggestion #1 (URL Type)</label>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <select  id="URL" name="One" class="form-select">
 
                                                 <option value="URL">URL</option>
@@ -613,9 +621,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" id="URLsuggestion1" placeholder="URL/URI to open" class="form-control" >
+                                                <input type="text" id="URLsuggestion1" placeholder="URL/URI to open (e.g.:https://www.virtuosorbm.com)" class="form-control" >
                                             </div>
 
                                         </div>
@@ -630,7 +638,7 @@
                                     <div class="row cardcontent" >
 
                                         <label style="margin-top: 5px" for="row">Suggestion #2 (Dialer Type)</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
 
                                             <select  id ="Dial" name="One" class="form-select">
 
@@ -651,9 +659,9 @@
                                                 <input type="email" class="form-control" placeholder="Suggestion Postback" id="Suggestion_Postback2">
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="email" class="form-control" placeholder="Mobile Number" id="Mobile">
+                                                <input type="email" class="form-control" placeholder="Mobile Number (e.g.:+918888888888)" id="Mobile">
                                             </div>
                                         </div>
 
@@ -714,7 +722,8 @@
                                             <center>      
                                                 <!-- <p class="phone-header-time">1:02</p> -->
                                                 <!--  <p class="phone-header-icons"><span class="material-icons">signal_cellular_alt</span> <span class="material-icons">wifi</span> <span class="material-icons battery">battery_std</span></p> -->
-                                                <div class="contact-image">  <img src="my_Camp_Data/images/logo.png" style="width:100%"> </div>
+                                                <div class="contact-image">  <img src="my_Camp_Data/images/logo.png" style="width:100%  ; padding-left: 8px;
+                                                    padding-right: 8px;"> </div>
                                                 <p class="contact-phone" id="senderIDPhone" style="text-align:center;">VNS</p> </center>
                                         </div>
                                         <div class="phone-messages">
@@ -725,7 +734,7 @@
                                                 <div class="inner-space"></div>
                                                 <span class="sell" id="title_mobile"> </span>
 
-                                                <span id="description_mobile"  style="margin-left:4px;display: block;"> </span><br>
+                                                <text id="description_mobile" style="margin-left: 4px; display: block;  word-wrap: break-word;font-size: 14px"></text>
                                                 <br>
                                                 <span class="g1" id="suggestion1MD" ><img src="my_Camp_Data/images/globe.png" style="width:10%"><b class="sell-n" id="suggestion1M"></b></span>
                                                 <hr class="top-space">

@@ -4,6 +4,10 @@
     Author     : pc-15
 --%>
 
+<%@page import="org.json.JSONArray"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.ZonedDateTime"%>
+<%@page import="java.time.Instant"%>
 <%@page import="java.io.File"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Base64"%>
@@ -33,6 +37,10 @@
             String bot = request.getParameter("bot");
 
             String Template = request.getParameter("Template");
+            String docapcheck = request.getParameter("docapcheck");
+            if(docapcheck==null){
+            docapcheck="true";
+            }
 
             dbcon db = new dbcon();
             db.getCon("VNS_RCS");
@@ -76,53 +84,92 @@
             if (jSONObject.has("access_token")) {
                 toke = jSONObject.getString("access_token");
             }
-
+            boolean chkflag = false;
+            boolean sendflag = true;
             toke = (String) jSONObject.get("access_token");
             System.out.println(rsp);
+            if (docapcheck != null && docapcheck.equals("true")) {
+                chkflag = true;
+            }
 
             for (String msisdn : ar) {
 
-                client = new OkHttpClient().newBuilder()
-                        .build();
-                mediaType = MediaType.parse("text/plain");
-                body = RequestBody.create(mediaType, "{\r\n   \"contentMessage\":{\r\n      \"templateMessage\":{ \r\n          \"templateCode\":\"" + Template + "\"\r\n      }    \r\n   }\r\n}");
-                req = new Request.Builder()
-                        .url("https://api.virtuosorbm.com/v1/phones/" + msisdn + "/agentMessages/async?botId=" + botId)
-                        .method("POST", body)
-                        .addHeader("Content-Type", "text/plain")
-                        .addHeader("Authorization", "Bearer " + toke)
-                        .build();
-                resp = client.newCall(req).execute();
-                String json = resp.body().string();
+                if (chkflag) {
 
-                JSONObject jobj = new JSONObject(json);
-                System.out.println(json);
-                if (jobj.has("sendTime")) {
+                    client = new OkHttpClient().newBuilder()
+                            .build();
+                    mediaType = MediaType.parse("text/plain");
 
-                    if (jobj.has("name")) {
+                    req = new Request.Builder()
+                            .url("https://api.virtuosorbm.com/v1/phones/" + msisdn + "/capabilities")
+                            .addHeader("Authorization", "Bearer " + toke)
+                            .build();
+                    resp = client.newCall(req).execute();
 
-                        out.println("Sent SuccessFully!!" + jobj.getString("sendTime"));
-                        String name = jobj.getString("name");
-                        name = name.substring(name.indexOf("/") + 1);
+                    String capabilties = resp.body().string();
+                    JSONObject capobject = new JSONObject(capabilties);
+                    System.out.println("Response:" + capabilties);
 
-                        System.out.println(name);
-                        name = name.substring(0, name.indexOf("/"));
-                        out.println("To Number:" + name);
+                    if (capobject.has("features")) {
+                        JSONArray jarray = capobject.getJSONArray("features");
+                        if (jarray.length() > 0) {
+                            sendflag = true;
+                        } else {
+                            out.println("Number:" + msisdn + " is RCS Disabled or not registered with bot as Tester!!!!");
+                            sendflag = false;
+
+                        }
                     } else {
-                        out.println("Failed!!!" + jobj.getString("sendTime"));
-                        if (jobj.has("eventType")) {
-                         out.println("EventType:"+jobj.getString("eventType"));
-                        }
-                         if (jobj.has("reason")) {
-                         out.println("Reason:"+jobj.getString("reason"));
-                        }
+                        sendflag = false;
+                        out.println("Number:" + msisdn + " is RCS Disabled or not registered with bot as Tester!!!!");
                     }
 
-                }else{
-                 out.println("Failed Unknown error!!!");
-            }
+                }
 
-                out.println();
+                if (sendflag) {
+                    client = new OkHttpClient().newBuilder()
+                            .build();
+                    mediaType = MediaType.parse("text/plain");
+                    body = RequestBody.create(mediaType, "{\r\n   \"contentMessage\":{\r\n      \"templateMessage\":{ \r\n          \"templateCode\":\"" + Template + "\"\r\n      }    \r\n   }\r\n}");
+                    req = new Request.Builder()
+                            .url("https://api.virtuosorbm.com/v1/phones/" + msisdn + "/agentMessages/async?botId=" + botId + "&doCapCheck=true")
+                            .method("POST", body)
+                            .addHeader("Content-Type", "text/plain")
+                            .addHeader("Authorization", "Bearer " + toke)
+                            .build();
+                    resp = client.newCall(req).execute();
+                    String json = resp.body().string();
+
+                    JSONObject jobj = new JSONObject(json);
+                    System.out.println(json);
+                    if (jobj.has("sendTime")) {
+                        DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
+                        ZonedDateTime zdt = ZonedDateTime.parse(jobj.getString("sendTime"), dtf).plusHours(5).plusMinutes(30);
+
+                        if (jobj.has("name")) {
+
+                            out.println("Request Submitted SuccessFully!!    " + zdt + "<br>");
+                            String name = jobj.getString("name");
+                            name = name.substring(name.indexOf("/") + 1);
+
+                            System.out.println(name);
+                            name = name.substring(0, name.indexOf("/"));
+                            out.println("To Number:" + name);
+                        } else {
+                            out.println("Failed!!!" + zdt + "<br>");
+                            if (jobj.has("eventType")) {
+                                out.println("EventType:" + jobj.getString("eventType") + "<br>");
+                            }
+                            if (jobj.has("reason")) {
+                                out.println("Reason:" + jobj.getString("reason") + "<br>");
+                            }
+                        }
+
+                    } else {
+                        out.println("Failed Unknown error!!!");
+                    }
+                }
+
             }
 
         %>
