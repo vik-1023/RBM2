@@ -118,7 +118,7 @@
                                         <td style="padding:10px;"><%=rs.getString("bot_message_types")%></td>
                                         <td style="padding:10px;"><%=rs.getString("brand_name")%></td>
                                         <td style="padding:10px;">Bot Created</td>
-                                        <td style="padding:10px;"><a href="BotConsole?bot=<%= rs.getString("bot_name")%>">View Details</a></td>
+                                        <td style="padding:10px;"><a href="ViewDetails?bot=<%= rs.getString("bot_name")%>">View Details</a></td>
                                     </tr>
                                     <%
                                             }

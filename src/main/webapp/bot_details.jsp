@@ -225,7 +225,7 @@
 		<hr>
 		<tr>
 			<td></td>
-			  <th><a href="ViewDetails">View All Test Devices</a></th> 
+			  <th><a href="TemplateList">View All Test Devices</a></th> 
 			  <td>+ Add a Test Device</span></td>
 		      
 		</tr>
