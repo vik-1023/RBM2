@@ -318,7 +318,7 @@
 
 
                     <p><b>Add Test Devices</b></p>
-                    <a href="My_Bot.jsp">Go Back</a>
+                    <a href="dashboard">Go Back</a>
                     <hr>
                     <br><br>
                     <div id="phoneNumbersContainer">
@@ -328,7 +328,7 @@
                                 <label for="Phone_Number">Primary phone number*</label>
                                 <div>
                                     <span class="india">India +91</span>
-                                    <input type="tel" class="Phone_Number" name="Phone_Number" id="Phone_Number" maxlength="10">
+                                    <input type="tel" class="Phone_Number" name="Phone_Number" id="Phone_Number" maxlength="10" minlength="10">
                                     <input type="button" value="Add" class="btn btn-danger" onclick="GetCount()">&nbsp;<label><div id="pending"></div></label>
                                 </div>
                                 <p>Before launch, your agent can only send messages to designated test devices.</p>
@@ -346,7 +346,8 @@
 
                                         dbcon db = new dbcon();
                                         db.getCon("VNS_RCS");
-                                        String s = "select * from Test_Device";
+										 String bot=request.getParameter("bot");
+                                        String s = "select * from Test_Device where Bot='"+bot+"' order by Submitted desc";
                                         ResultSet rs = db.getResult(s);
                                     %>
                               

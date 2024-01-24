@@ -18,13 +18,16 @@
     </head>
     <%
         String Phone_Number=request.getParameter("Phone_Number");
+			Phone_Number="+91"+Phone_Number;
         dbcon db=new dbcon();
         rbmClasses rb=new rbmClasses();
         rb.sendInvite(Phone_Number);
+
+		
 try{
         
         db.getCon("VNS_RCS");
-       String s = "INSERT INTO Test_Device (Phone_Number, Status, Submitted) VALUES ('" + Phone_Number + "', 'Ready', NOW())";
+       String s = "INSERT INTO Test_Device (Phone_Number, Status, Submitted) VALUES ('" + Phone_Number + "', 'Pending', NOW())";
 
         db.setUpdate(s);
         }catch(Exception e){

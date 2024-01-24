@@ -106,7 +106,7 @@
                                             dbcon db = new dbcon();
                                             db.getCon("VNS_RCS");
 
-                                            String Query = "Select bot_name,bot_message_types,brand_name from rbm_table order by id DESC LIMIT 4";
+                                            String Query = "select Bot,Type,Brand from Brand_Bot_Details;";
                                             //select * from rbm_table order by id DESC LIMIT 5;
                                             //Select bot_name,bot_message_types,brand_name from rbm_tableorder by id DESC LIMIT 5
                                             Statement st = db.getStmt();
@@ -114,11 +114,11 @@
                                             while (rs.next()) {
                                     %>
                                     <tr class="bot-row">
-                                        <td style="padding:10px;"><%=rs.getString("bot_name")%></td>
-                                        <td style="padding:10px;"><%=rs.getString("bot_message_types")%></td>
-                                        <td style="padding:10px;"><%=rs.getString("brand_name")%></td>
+                                        <td style="padding:10px;"><%=rs.getString(1)%></td>
+                                        <td style="padding:10px;"><%=rs.getString(2)%></td>
+                                        <td style="padding:10px;"><%=rs.getString(3)%></td>
                                         <td style="padding:10px;">Bot Created</td>
-                                        <td style="padding:10px;"><a href="ViewDetails?bot=<%= rs.getString("bot_name")%>">View Details</a></td>
+                                        <td style="padding:10px;"><a href="ViewDetails?bot=<%= rs.getString(1)%>">View Details</a></td>
                                     </tr>
                                     <%
                                             }
